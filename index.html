@@ -141,17 +141,8 @@
             <div class="card mb-4 dark-card-admin text-white">
               <div class="card-body">
                 <button id="chaosBtn"
-                  class="btn btn-flat btn-rounded waves-effect font-weight-bold float-left btn-dash purple darken-4">Chaos
+                  class="btn btn-flat btn-rounded waves-effect font-weight-bold float-left btn-dash btn-lg purple darken-4">Chaos
                   Roll</button>
-                <button id="enchantWorldBtn"
-                  class="btn btn-flat btn-rounded waves-effect font-weight-bold float-left btn-dash blue darken-4">Enchant
-                  the World</button>
-                <button id="wackyBtn"
-                  class="btn btn-flat btn-rounded waves-effect font-weight-bold float-left btn-dash orange darken-4">Get
-                  Wacky</button>
-                <button id="originalRollsBtn"
-                  class="btn btn-flat btn-rounded waves-effect font-weight-bold float-right btn-dash green darken-4">Add
-                </button>
                 <table class="chaosRolls table large-header">
                   <thead>
                     <tr>
@@ -302,7 +293,8 @@
           </div>
         </div>
         <div class="modal-footer text-center">
-          <button id="suddenDeathYarp" type="button" class="btn btn-red btn-lg" data-dismiss="modal" onclick="activateSuddenDeath()">Yarp</button>
+          <button id="suddenDeathYarp" type="button" class="btn btn-red btn-lg" data-dismiss="modal"
+            onclick="activateSuddenDeath()">Yarp</button>
           <button id="suddenDeathNarp" type="button" class="btn btn-blue btn-lg" data-dismiss="modal">Narp</button>
         </div>
       </div>
@@ -342,304 +334,21 @@
           worldEffects.sunkenHope = false
           $(".worldEffects").remove();
         }
+        if (chaosRollArray[rndmNmbr].title == 'Rage') {
+          if (!worldEffects.rage) {
+            worldEffects.rage = true
+            $("#worldEffects").prepend("<tr id='enchantWorld' class='worldEffects'><td class='text-white'>Creatures cannot block. All creatures must attack each turn if able.</td></tr>");
+          }
+        }
+        if (chaosRollArray[rndmNmbr].title == 'Sunken Hope') {
+          if (!worldEffects.sunkenHope) {
+            worldEffects.sunkenHope = true
+            $("#worldEffects").prepend("<tr id='enchantWorld' class='worldEffects'><td class='text-white'>At the beginning of each player\'s upkeep, that player returns a creature they control to its owner\'s hand.</td></tr>");
+          }
+        };
 
         $('#chaosRolls').prepend([chaosRollArray[rndmNmbr]].map(Item).join(''));
 
-      });
-    });
-    // create a new enchant world roll
-    $(function () {
-      $('#enchantWorldBtn').on('click', function (e) {
-
-        var rndmNmbr = randomNumberGenerator(0, (enchantWorldRollArray.length - 1))
-        console.log('wacky roll: ' + rndmNmbr)
-
-        if (enchantWorldRollArray[rndmNmbr].title == 'Rage') {
-          if (!worldEffects.rage) {
-            worldEffects.rage = true
-            $("#worldEffects").prepend("<tr id='enchantWorld' class='worldEffects'><td class='text-white'>Creatures cannot block. All creatures must attack each turn if able.</td></tr>");
-          }
-        } else if (enchantWorldRollArray[rndmNmbr].title == 'Sunken Hope') {
-          if (!worldEffects.sunkenHope) {
-            worldEffects.sunkenHope = true
-            $("#worldEffects").prepend("<tr id='enchantWorld' class='worldEffects'><td class='text-white'>At the beginning of each player\'s upkeep, that player returns a creature they control to its owner\'s hand.</td></tr>");
-          }
-        };
-
-        $('#chaosRolls').prepend([enchantWorldRollArray[rndmNmbr]].map(Item).join(''));
-
-      });
-    });
-    // create a new wacky roll
-    $(function () {
-      $('#wackyBtn').on('click', function (e) {
-
-        var rndmNmbr = randomNumberGenerator(0, (wackyRollArray.length - 1))
-        console.log('wacky roll: ' + rndmNmbr)
-
-        if (wackyRollArray[rndmNmbr].title == 'Rage') {
-          if (!worldEffects.rage) {
-            worldEffects.rage = true
-            $("#worldEffects").prepend("<tr id='enchantWorld' class='worldEffects'><td class='text-white'>Creatures cannot block. All creatures must attack each turn if able.</td></tr>");
-          }
-        }
-        if (wackyRollArray[rndmNmbr].title == 'Sunken Hope') {
-          if (!worldEffects.sunkenHope) {
-            worldEffects.sunkenHope = true
-            $("#worldEffects").prepend("<tr id='enchantWorld' class='worldEffects'><td class='text-white'>At the beginning of each player\'s upkeep, that player returns a creature they control to its owner\'s hand.</td></tr>");
-          }
-        };
-
-        $('#chaosRolls').prepend([wackyRollArray[rndmNmbr]].map(Item).join(''));
-
-      });
-    });
-    // add original rolls from the OG app to this app
-    $(function () {
-      $('#originalRollsBtn').on('click', function (e) {
-        if (originalRollsAdded) {
-          originalRollsAdded = false
-        } else {
-          originalRollsAdded = true
-          //OG chaos rolls array
-          chaosRollArray.push(
-            { title: 'Eureka', attr: 'classes', type: 'chaos', text: 'Beginning with you and proceeding in turn order, each player may choose a Planeswalker, creature, enchantment, artifact, or land card in his or her hand and put that card onto the battlefield. Continue until each player in turn has declined to put a card onto the battlefield.' },
-            { title: 'Air Strike', attr: 'classes', type: 'chaos', text: 'Put three 2/1 Eagle tokens of all colours with flying and haste onto the battlefield. At the end of the turn, sacrifice all Eagle tokens.' },
-            { title: 'Feldon’s Cane', attr: 'classes', type: 'chaos', text: 'Reshuffle your graveyard into your library.' },
-            { title: 'EnchantWorldLand', attr: 'classes', type: 'chaos', text: 'Roll on EnchantWorldLand.' },
-            { title: 'Footbottom Feast', attr: 'classes', type: 'chaos', text: 'Put any number of creatures from your graveyard on top of your library. Draw a card.' },
-            { title: 'Tranquility', attr: 'classes', type: 'chaos', text: 'Destroy all enchantments.' },
-            { title: 'Roll three times', attr: 'classes', type: 'chaos', text: 'Roll three Chaos Rolls.' },
-            { title: 'Rushing River', attr: 'classes', type: 'chaos', text: 'Return target nonland permanent to its owner’s hand. You may sacrifice a land to return another target nonland permanent to its owner’s hand.' },
-            { title: 'Tainted Energy', attr: 'classes', type: 'chaos', text: 'Choose one – Lose 1d6 life; or target opponent gains 1d6 life.' },
-            { title: 'Roll that Fork', attr: 'classes', type: 'chaos', text: 'Get a RollFork Counter. Sacrifice RollFork to duplicate the effects of any roll just rolled. You choose all new targets.' },
-            { title: 'Secret Cache', attr: 'classes', type: 'chaos', text: 'Shuffle your deck. If your top card after the shuffle is a Planeswalker, creature, enchantment, artifact, or land card, put it onto the battlefield. If not, lose 1 life and shuffle again. Repeat until you get a Planeswalker, creature, enchantment, artifact, or land card.' },
-            { title: 'Exhume', attr: 'classes', type: 'chaos', text: 'Each player puts a creature card from his or her graveyard onto the battlefield.' },
-            { title: 'Neutral Plane', attr: 'classes', type: 'chaos', text: 'Destroy all non-Aura enchantments.' },
-            { title: 'Sworn Enemy', attr: 'classes', type: 'chaos', text: 'Target creature gains protection from a colour of your choice until the end of turn.' },
-            { title: 'Abandon Hope', attr: 'classes', type: 'chaos', text: 'Discard any number of cards from your hand. Look at target opponent’s hand and choose that number of cards from it. That player discards those cards.' },
-            { title: 'Mute', attr: 'classes', type: 'chaos', text: 'You may not cast a spell this turn.' },
-            { title: 'Threshold Command', attr: 'classes', type: 'chaos', text: 'Each player puts cards from the top of his or her library into his or her graveyard until there are at least seven cards in his or her graveyard.' },
-            { title: 'Balance', attr: 'classes', type: 'chaos', text: 'Except the player who controls the fewest lands, each player sacrifices lands until all players control the same number of lands as the player who controls the fewest. Players do the same for creatures and for cards in hand.' },
-            { title: 'Ancestral Recall', attr: 'classes', type: 'chaos', text: 'Target player draws three cards.' },
-            { title: 'Memory Lapse', attr: 'classes', type: 'chaos', text: 'Skip your draw phase this turn.' },
-            { title: 'Terminate', attr: 'classes', type: 'chaos', text: 'Destroy target creature.' },
-            { title: 'Prosperity', attr: 'classes', type: 'chaos', text: 'Each player draw 1d10 cards. (Roll once for everybody.)' },
-            { title: 'Enlightened Tutor', attr: 'classes', type: 'chaos', text: 'Search your library for an artifact or enchantment card and reveal that card. Shuffle your library and then put the revealed card on top. At the beginning of your upkeep, you may pay W or 3 to draw a card.' },
-            { title: 'Gauntlet of Chaos', attr: 'classes', type: 'chaos', text: 'Exchange control of target artifact, creature, or land you control for control of target permanent of the same type an opponent controls. Then, destroy all enchantments enchanted on those permanents.' },
-            { title: 'Déjà Vu', attr: 'classes', type: 'chaos', text: 'Each player shuffles the cards in his or her graveyard and puts those cards on top of his or her library.' },
-            { title: 'Manipulate Fate', attr: 'classes', type: 'chaos', text: 'Search your library for three cards, exile them, then shuffle your library. Draw a card.' },
-            { title: 'Syphon Soul', attr: 'classes', type: 'chaos', text: 'Deal 2 damage to each opponent and gain 1 life for each damage dealt.' },
-            { title: 'Demonic Tutor', attr: 'classes', type: 'chaos', text: 'Search your library for a card and put it in your hand. Then, shuffle your library.' },
-            { title: 'Simplicity’s Reward', attr: 'classes', type: 'chaos', text: 'Each player gains 1 life for each basic land he or she controls. Each player takes 1 damage for each nonbasic land he or she controls.' },
-            { title: 'Solid Fog', attr: 'classes', type: 'chaos', text: 'As long as you remain in the game, until your next turn, no attack phases may be declared.' },
-            { title: 'Mating Call', attr: 'classes', type: 'chaos', text: 'At the beginning of your first main phase, you may pay 1 plus the converted mana cost of a creature in any graveyard. If you do, exile that creature card and put a token copy of that creature onto the battlefield under your control.' },
-            { title: 'Better Off Dead', attr: 'classes', type: 'chaos', text: 'Place a creature from your graveyard onto the battlefield under target opponent’s control.' },
-            { title: 'Nevinyrral’s lil’ Disk', attr: 'classes', type: 'chaos', text: 'Each player sacrifices a creature, an enchantment, and an artifact.' },
-            { title: 'Seeds of Innocence', attr: 'classes', type: 'chaos', text: 'Destroy all artifacts. For each artifact destroyed, that artifact’s controller gains life equal to that artifact’s converted casting cost.' },
-            { title: 'Massive Mana Clash', attr: 'classes', type: 'chaos', text: 'Each player flips a coin. Each time a player’s coin comes up tails, that player takes 1 damage. When a player’s coin comes up heads, he or she stops flipping. Repeat until each player’s coin comes up heads' },
-            { title: 'Storm Seeker', attr: 'classes', type: 'chaos', text: 'Target player takes 1 damage for each card in his or her hand.' },
-            { title: 'Collective Unconscious', attr: 'classes', type: 'chaos', text: 'Draw a card for each creature you control.' },
-            { title: 'Chaos Knowledge', attr: 'classes', type: 'chaos', text: 'Roll two Chaos Rolls (without resolving either), then choose one roll to ignore. Resolve the other roll.' },
-            { title: 'Morbid Hunger', attr: 'classes', type: 'chaos', text: 'Deal 3 damage to any target. Gain 3 life.' },
-            { title: 'Essence Vortex', attr: 'classes', type: 'chaos', text: 'Destroy target creature unless its controller pays life equal to its toughness. It cannot be regenerated.' },
-            { title: 'Stupor', attr: 'classes', type: 'chaos', text: 'Target opponent discards a card at random, then discards a card.' },
-            { title: 'Braingeyser', attr: 'classes', type: 'chaos', text: 'Target player draws 1d6 cards.' },
-            { title: 'Stormbind', attr: 'classes', type: 'chaos', text: 'Discard a card at random: Deal 2 damage to target creature or player. You may pay 2 to repeat this process until the end of the Chaos Phase.' },
-            { title: 'Necropotence', attr: 'classes', type: 'chaos', text: 'Pay 1 life: Exile the top card of your library face down. Put that card into your hand at the beginning of your next end step. You may do this as many times as you wish but only during this Chaos Phase. Skip your draw step this turn.' },
-            { title: 'Earthquake', attr: 'classes', type: 'chaos', text: 'Deal 1d6 damage to each creature without flying and each player.' },
-            { title: 'Stream of life', attr: 'classes', type: 'chaos', text: 'Target player gains 1d10 life.' },
-            { title: 'Fumarole', attr: 'classes', type: 'chaos', text: 'Lose 3 life: Destroy target land and target creature.' },
-            { title: 'Chaos Lore', attr: 'classes', type: 'chaos', text: 'Choose one – Search your library for two basic lands and put them onto the battlefield; or search your library for a nonbasic land and put it onto the battlefield. Shuffle your library.' },
-            { title: 'Winds of Change', attr: 'classes', type: 'chaos', text: 'Each player shuffles the cards from his or her hand into his or her library, then draws that many cards.' },
-            { title: 'WackyLand III', attr: 'classes', type: 'chaos', text: 'Roll 1d3 times on WackyLand.' },
-            { title: 'Polymorph', attr: 'classes', type: 'chaos', text: 'Destroy target creature. It can’t be regenerated. Its controller reveals cards from the top of his or her library until he or she reveals a creature card. The player puts that card onto the battlefield, then shuffles all other cards revealed this way into his or her library.' },
-            { title: 'Gold Strike', attr: 'classes', type: 'chaos', text: 'All of your lands produce an additional mana of the appropriate type when tapped for mana this turn.' },
-            { title: 'Portent', attr: 'classes', type: 'chaos', text: 'Look at the top three cards of target player’s library, then put them back in any order. You may have that player shuffle his or her library. Draw a card.' },
-            { title: 'Revenge is Sweet', attr: 'classes', type: 'chaos', text: 'Sacrifice a permanent: destroy a permanent of the same type.' },
-            { title: 'Soul Leech', attr: 'classes', type: 'chaos', text: 'Deal 1 damage to up to three target creatures or players. For each point of damage dealt this way, gain 1 life.' },
-            { title: 'Stasis', attr: 'classes', type: 'chaos', text: 'Skip your untap phase this turn. At the beginning of upkeep for each player who is affected by this effect, that player may pay U or 3. If that player does, the next player in turn order gains this effect.' },
-            { title: 'Pity', attr: 'classes', type: 'chaos', text: 'The player with lowest amount of life gains 5 life. If more than one player has the lowest amount of life, ignore this effect.' },
-            { title: 'Creeping Mold', attr: 'classes', type: 'chaos', text: 'Destroy target artifact, land, or enchantment.' },
-            { title: 'Mutual Betrayal', attr: 'classes', type: 'chaos', text: 'Look at target opponent’s hand and choose a card. That player then looks at your hand and chooses a card. Exchange the cards chosen this way.' },
-            { title: 'Chain Lightning', attr: 'classes', type: 'chaos', text: 'Deal 3 damage to target creature or player. Then that player or that creature’s controller may pay RR. If the player does, he or she may copy this spell and may choose a new target for that copy.' },
-            { title: 'Mana Short', attr: 'classes', type: 'chaos', text: 'Tap all lands you control. Lands you control do not untap during your untap phase this turn.' },
-            { title: 'Rolling Thunder', attr: 'classes', type: 'chaos', text: 'Deal 1d6-1 damage divided any way you choose among any number of target creatures or players.' },
-            { title: 'Goblin Game', attr: 'classes', type: 'chaos', text: 'Each player hides at least one item, then all players reveal them simultaneously. Each player loses life equal to the number of items he or she revealed. The player who revealed the fewest items then loses half his or her life, rounded up. If two or more players are tied for fewest, each loses half his or her life, rounded up.' },
-            { title: 'EnchantWorldLand+', attr: 'classes', type: 'chaos', text: 'Leave any EnchantWorldLand in play. Roll on EnchantWorldLand and add that result to the battlefield.' },
-            { title: 'Commanding Presence', attr: 'classes', type: 'chaos', text: 'Opponents may not play spells or activate abilities until end of turn.' },
-            { title: 'Illusions of Grandeur', attr: 'classes', type: 'chaos', text: 'Gain 20 life and four illusion counters. At the beginning of your upkeep, remove an illusion counter. When the last illusion counter is removed, lose 20 life.' },
-            { title: 'Backflash', attr: 'classes', type: 'chaos', text: 'This turn, whenever a card is cast from the graveyard using flashback, it is returned to its owner’s hand instead of being exiled.' },
-            { title: 'Never Say Die', attr: 'classes', type: 'chaos', text: 'Roll 1d6. All creatures in all graveyards with toughness less than or equal to the rolled number are returned to the battlefield under their owners’ control.' },
-            { title: 'WackyLand', attr: 'classes', type: 'chaos', text: 'Roll on WackyLand.' },
-            { title: 'Reclaim', attr: 'classes', type: 'chaos', text: 'Put target card from your graveyard on top of your library. At the beginning of your upkeep, you may pay G or 3 to draw a card.' },
-            { title: 'Prophetic Bolt', attr: 'classes', type: 'chaos', text: 'Deal 4 damage to target creature or player. Look at the top four cards of your library. Put one of those cards into your hand and the rest on the bottom of your library in any order.' },
-            { title: 'Hymn to Tourach', attr: 'classes', type: 'chaos', text: 'Target player discards two cards at random.' },
-            { title: 'Jester’s Cap', attr: 'classes', type: 'chaos', text: 'Search through target player’s library for any three cards and exile those cards. That player then shuffles his or her library.' },
-            { title: 'Agonizing Memories', attr: 'classes', type: 'chaos', text: 'Look at target player’s hand and choose two cards from it. Put those cards on top of that player’s library in any order.' },
-            { title: 'Time Crawl', attr: 'classes', type: 'chaos', text: 'Pass the dice; your turn is over. Put a turn counter on the Time Crawl Jackpot.' },
-            { title: 'Natural Order', attr: 'classes', type: 'chaos', text: 'Sacrifice a creature: Search your library for a creature card of the same colour and put that card onto the battlefield. Then shuffle your library.' },
-            { title: 'Relentless Assault', attr: 'classes', type: 'chaos', text: 'After your attack phase, untap all creatures that attacked this turn. After this main phase, there is an additional combat phase followed by an additional main phase.' },
-            { title: 'Grinning Totem', attr: 'classes', type: 'chaos', text: 'Search target opponent’s library for a card and exile it. Then that player shuffles his or her library. Until the beginning of your next upkeep, you may play that card. At the beginning of your next upkeep, if you haven’t played it, put it into its owner’s graveyard.' },
-            { title: 'Pestilence', attr: 'classes', type: 'chaos', text: 'Deal 1d6 damage to each creature and each player.' },
-            { title: 'Circle Shield', attr: 'classes', type: 'chaos', text: 'Get three shield counters. Whenever you would take damage, instead remove a shield counter.' },
-            { title: 'Impulse', attr: 'classes', type: 'chaos', text: 'Look at the top four cards of your library. Put one of them into your hand and the rest on the bottom of your library in any order.' },
-            { title: 'Temporal Spring', attr: 'classes', type: 'chaos', text: 'Put target permanent on top of its owner’s library' },
-            { title: 'Gamble', attr: 'classes', type: 'chaos', text: 'Search your library for a card, put that card into your hand, discard a card at random, then shuffle your library.' },
-            { title: 'Desert Twister', attr: 'classes', type: 'chaos', text: 'Destroy target permanent.' },
-            { title: 'Roll Three Times', attr: 'classes', type: 'chaos', text: 'Roll three Chaos Rolls.' },
-            { title: 'WackyLand', attr: 'classes', type: 'chaos', text: 'Roll on WackyLand.' },
-            { title: 'Forget', attr: 'classes', type: 'chaos', text: 'Target player discards two cards, then draws as many cards as he or she discarded this way.' },
-            { title: 'Gambit', attr: 'classes', type: 'chaos', text: 'Each player chooses a card in his or her hand. Each player then reveals the card chosen this way. Put the creature with the lowest converted mana cost onto the battlefield under its owner’s control, then repeat with enchantments and artifacts. If two or more cards tie for the lowest converted mana cost, put all those cards onto the battlefield.' },
-            { title: 'Luck', attr: 'classes', type: 'chaos', text: 'Reveal your hand and choose an instant or sorcery card from it at random. Play that spell without paying its casting cost. If X is in the casting cost, X is 0.' },
-            { title: 'Windows of Opportunity', attr: 'classes', type: 'chaos', text: 'Target player taps all artifacts, lands, and creatures he or she controls. At the end of your turn, tap all artifacts, lands, and creatures you control.' },
-            { title: 'Energy Bolt', attr: 'classes', type: 'chaos', text: 'Choose one – Deal 1d6 damage to target player or gain 1d6 life.' },
-            { title: 'Price of Knowledge', attr: 'classes', type: 'chaos', text: 'Skip your next turn. Draw four cards.' },
-            { title: 'Tremble', attr: 'classes', type: 'chaos', text: 'Each player sacrifices a land.' },
-            { title: 'Jokulhaups Light', attr: 'classes', type: 'chaos', text: 'Each player sacrifices one land, one creature, and one artifact.' },
-            { title: 'Cone of Flame', attr: 'classes', type: 'chaos', text: 'Choose three target creatures or players. Deal 1 damage to the first, 2 damage to the second, and 3 damage to the third.' },
-            { title: 'Fact or Fiction', attr: 'classes', type: 'chaos', text: 'Reveal the top five cards of your library. An opponent separates those cards into two piles. Put one pile into your hand and the other into your graveyard.' },
-            { title: 'Happy Balance', attr: 'classes', type: 'chaos', text: 'Each player reveals cards from the top of his or her library and puts lands and creatures revealed in this way onto the battlefield until he or she controls a number of lands and creatures equal to the number of lands controlled by the player who controls the most and the number of creatures equal to the number of creatures controlled by the player who controls the most. Place cards revealed in this way but not put onto the battlefield on top of each player’s library. Each player then shuffles his or her library and draws cards until each player has as many cards in hand as the player with the highest number of cards in hand.' },
-            { title: 'Confiscate', attr: 'classes', type: 'chaos', text: 'Gain control of target permanent.' },
-            { title: 'CounterRoll', attr: 'classes', type: 'chaos', text: 'Get a CounterRoll counter. Sacrifice CounterRoll to counter the effects of any roll.' },
-            { title: 'Flux', attr: 'classes', type: 'chaos', text: 'Each player discards any number of cards, then draws that many cards. Draw a card.' },
-            { title: 'Wager', attr: 'classes', type: 'chaos', text: 'Target opponent names a number and reveals cards from his or her library until he or she reveals a spell of the named casting cost, then puts that card into his or her hand. That player then puts all other revealed cards into his or her graveyard and takes 1 damage for each card put into the graveyard in this manner.' },
-            { title: 'Wheel of Fortune', attr: 'classes', type: 'chaos', text: 'Each player discards his or her hand and draws seven cards.' },
-            { title: 'Double-Sided Blade', attr: 'classes', type: 'chaos', text: 'Roll 1d6. Any combination of players of your choice draws that many cards. For each card you draw, take 2 damage. For each card drawn by an opponent, that player takes 1 damage.' },
-            { title: 'Clash of Chaos', attr: 'classes', type: 'chaos', text: 'Choose target opponent. Flip a coin. Opponent calls it in the air. Loser of the flip takes 2 damage. Winner decides to flip again or to stop.' },
-            { title: 'Master Chef', attr: 'classes', type: 'chaos', text: 'Choose one – Get a CounterRoll counter (sacrifice CounterRoll to counter the effects of any roll); or get a RollFork counter (sacrifice RollFork to duplicate the effects of any Chaos effect just rolled; you choose all new targets).' },
-            { title: 'All Hallow’s Eve Light', attr: 'classes', type: 'chaos', text: 'Each player puts up to two creatures from his or her graveyard onto the battlefield.' },
-            { title: 'Mana Barbs', attr: 'classes', type: 'chaos', text: 'Whenever you tap a land for mana, you take 1 damage.' },
-            { title: 'Retribution', attr: 'classes', type: 'chaos', text: 'Choose two target creatures controlled by one player. That player sacrifices one of those creatures. Put a -1/-1 counter on the other.' },
-            { title: 'WackyLand', attr: 'classes', type: 'chaos', text: 'Roll on WackyLand.' },
-            { title: 'Infernal Tutor', attr: 'classes', type: 'chaos', text: 'Choose a number. Reveal cards in your library until you reveal a permanent with a converted mana cost equal to the chosen number. Put that card onto the battlefield and exile all other cards revealed this way.' },
-            { title: 'Mind Bend', attr: 'classes', type: 'chaos', text: 'Change the text of target permanent by replacing all instances of one colour word or basic land type with another. This does not end at the end of the turn.' },
-            { title: 'Drain Life', attr: 'classes', type: 'chaos', text: 'Deal 1d6 damage to target creature or player. You gain life equal to the damage dealt, but not more life than that creature’s toughness or that player’s life total.' },
-            { title: 'Desperate Times', attr: 'classes', type: 'chaos', text: 'Look at the top three cards of your library. Put one in your hand and the other two into your graveyard. Roll again.' },
-            { title: 'Distract: After your turn, you and all cards you control phase out.' },
-            { title: 'Patience', attr: 'classes', type: 'chaos', text: 'Lose 2 life and gain three focus counters. At the beginning of your upkeep, remove a focus counter. When the last focus counter is removed, gain 5 life.' },
-            { title: 'Price of Immortality', attr: 'classes', type: 'chaos', text: 'Discard a card. Gain 4 life.' },
-            { title: 'Gaea’s Charm', attr: 'classes', type: 'chaos', text: 'Choose one – Target player shuffles up to three cards from his or her graveyard into his or her library; or exile three cards from target player’s graveyard. Draw a card.' },
-            { title: 'Five Card', attr: 'classes', type: 'chaos', text: 'Each player reveals the top five cards of his or her library. The player whose revealed cards have the highest converted mana cost puts those five cards into his or her hand, and all other players place their revealed cards in their graveyards.' },
-            { title: 'Ill-Gotten Gains', attr: 'classes', type: 'chaos', text: 'Each player discards his or her hand, then returns up to three cards from his or her graveyard to his or her hand.' },
-            { title: 'Murphy’s Law', attr: 'classes', type: 'chaos', text: 'Roll two Chaos Rolls (without resolving either), then target opponent chooses one roll to resolve and makes all decisions in regards to it. Ignore the other roll.' },
-            { title: 'Regrowth', attr: 'classes', type: 'chaos', text: 'Return target card from your graveyard to your hand.' },
-            { title: 'Chaos Storm', attr: 'classes', type: 'chaos', text: 'Roll two Chaos Rolls and reverse the direction of turns.' },
-            { title: 'CounterRoll', attr: 'classes', type: 'chaos', text: 'Get a CounterRoll counter. Sacrifice CounterRoll to counter the effects of any roll.' },
-            { title: 'Storm Seeker Misses', attr: 'classes', type: 'chaos', text: 'Take 1 damage for each card in your hand.' },
-            { title: 'Price of Strength', attr: 'classes', type: 'chaos', text: 'Lose 4 life. Place two +1/+1 counters on each creature you control.' },
-            { title: 'Global Stream of Life', attr: 'classes', type: 'chaos', text: 'Each player gains 1d10 life. (Roll once for everybody.)' },
-            { title: 'Disenchant', attr: 'classes', type: 'chaos', text: 'Destroy target artifact or enchantment.' },
-            { title: 'Gathering', attr: 'classes', type: 'chaos', text: 'Gain 1 life for each creature in play.' },
-            { title: 'Gift of the Magi', attr: 'classes', type: 'chaos', text: 'Choose one – Fain 3 life; draw three cards; or add three mana of any colour to your mana pool at the beginning of your next main phase.' },
-            { title: 'RollFork', attr: 'classes', type: 'chaos', text: 'Get a RollFork Counter. Sacrifice RollFork to duplicate the effects of any roll just rolled. You choose all new targets.' },
-            { title: 'Price of Power', attr: 'classes', type: 'chaos', text: 'Sacrifice a land. Deal 4 damage to any target.' },
-            { title: 'EnchantWorldLand+', attr: 'classes', type: 'chaos', text: 'Leave any EnchantWorldLand in play. Roll on EnchantWorldLand and add that result to the battlefield.' },
-            { title: 'Pillage', attr: 'classes', type: 'chaos', text: 'Destroy target artifact or land. It cannot be regenerated.' },
-            { title: 'Stronghold Discipline', attr: 'classes', type: 'chaos', text: 'Each player loses 1 life for each creature he or she controls.' },
-            { title: 'Soothing Balm', attr: 'classes', type: 'chaos', text: 'Target player gains 5 life.' },
-            { title: 'Topple', attr: 'classes', type: 'chaos', text: 'Exile target creature with the highest power. If two or more creatures are tied for highest power, you choose which to target.' },
-            { title: 'Ray of Command', attr: 'classes', type: 'chaos', text: 'Untap target creature an opponent controls and gain control of it until end of turn. That creature gains haste until end of turn. When you lose control of the creature, tap it.' },
-            { title: 'Gerrard’s Wisdom', attr: 'classes', type: 'chaos', text: 'You gain 2 life for each card in your hand.' },
-            { title: 'Peace Talks', attr: 'classes', type: 'chaos', text: 'As long as you remain in the game, until your next turn, skip all attack phases and no player may cast a spell that targets a player.' },
-            { title: 'Arcanix Ray', attr: 'classes', type: 'chaos', text: 'Target player names a card, then reveals the top card of his or her library. If it’s the named card, the player puts it into his or her hand. Otherwise, the player puts it into his or her graveyard and Arcanix Ray deals 2 damage to him or her. Draw a card.' },
-            { title: 'Truce', attr: 'classes', type: 'chaos', text: 'Each player may draw up to two cards. For each card less than two a player draws this way, that player gains 2 life.' },
-            { title: 'Meet in the Middle', attr: 'classes', type: 'chaos', text: 'Discard or draw until you have exactly four cards in hand.' },
-            { title: 'Land Ho!', attr: 'classes', type: 'chaos', text: 'Each player may put up to three lands from his or her hand or graveyard onto the battlefield.' },
-            { title: 'Unearth', attr: 'classes', type: 'chaos', text: 'Return target creature card with converted mana cost 3 or less from your graveyard to the battlefield.' },
-            { title: 'Blue', attr: 'classes', type: 'chaos', text: 'The next spell you play is countered. When this occurs, get a CounterRoll counter. Sacrifice CounterRoll to counter the effects of any roll.' },
-            { title: 'Wackyland III', attr: 'classes', type: 'chaos', text: 'Roll 1d3 times on WackyLand.' },
-            { title: 'Control Magic', attr: 'classes', type: 'chaos', text: 'Gain control of target creature.' },
-            { title: 'Intimidation', attr: 'classes', type: 'chaos', text: 'Until your next turn, you cannot be attacked.' },
-            { title: 'Lightning Round', attr: 'classes', type: 'chaos', text: 'Until your next turn, when any player casts a spell, that player draws a card.' },
-            { title: 'Unhinge', attr: 'classes', type: 'chaos', text: 'Target player discards a card. Draw a card' },
-            { title: 'Calm Before the Storm', attr: 'classes', type: 'chaos', text: 'There are no Chaos Phases until your next turn. Then, until your next turn after that, players roll two Chaos Rolls per turn.' },
-            { title: 'Peek', attr: 'classes', type: 'chaos', text: 'Look at target player’s hand. Draw a card.' },
-            { title: 'Yawgmoth’s Will', attr: 'classes', type: 'chaos', text: 'Until end of turn, you may play cards from your graveyard. If a card would be put into your graveyard from anywhere this turn, exile that card instead.' },
-            { title: 'Triple EnchantWorldLand', attr: 'classes', type: 'chaos', text: 'Destroy all EnchantWorldLand effects. Roll three times on EnchantWorldLand and put all those effects in play.' },
-            { title: 'CounterRoll', attr: 'classes', type: 'chaos', text: 'Get a CounterRoll counter. Sacrifice CounterRoll to counter the effects of any roll.' },
-            { title: 'Swords to Plowshares', attr: 'classes', type: 'chaos', text: 'Exile target creature. That creature’s controller gains life equal to its power.' },
-            { title: 'Price of Support', attr: 'classes', type: 'chaos', text: 'Sacrifice a creature. Place four 1/1 Spirit tokens that are all colours onto the battlefield.' },
-            { title: 'Time Twister', attr: 'classes', type: 'chaos', text: 'Each player shuffles his or her hand and graveyard into his or her library. Each player then draws seven cards.' },
-            { title: 'Misfortune', attr: 'classes', type: 'chaos', text: 'An opponent chooses one – You place a +1/+1 counter on each creature you control and gain 4 life; or you put a -1/-1 counter on each creature that player controls and that player takes 4 damage.' },
-            { title: 'Hymn of Rebirth', attr: 'classes', type: 'chaos', text: 'Put target creature card from a graveyard onto the battlefield under your control.' },
-            { title: 'Sift', attr: 'classes', type: 'chaos', text: 'Draw three cards then choose and discard a card.' },
-            { title: 'RollFork', attr: 'classes', type: 'chaos', text: 'Get a RollFork Counter. Sacrifice RollFork to duplicate the effects of any roll just rolled. You choose all new targets.' },
-            { title: 'Conjure', attr: 'classes', type: 'chaos', text: 'Search your library for an artifact card and put it onto the battlefield. Shuffle your library.' },
-            { title: 'Helm of Obedience', attr: 'classes', type: 'chaos', text: 'Target opponent puts cards from the top of his or her library into his or her graveyard until a creature card or 1d6 cards are put into that graveyard this way, whichever comes first. If a creature card is put into that graveyard this way, put that card onto the battlefield under your control.' },
-            { title: 'Balloon', attr: 'classes', type: 'chaos', text: 'Each time you tap a land for mana this turn, gain 1 life.' },
-            { title: 'Lucky Us', attr: 'classes', type: 'chaos', text: 'Each player reveals the top card of his or her library. If that card is a Planeswalker, creature, enchantment, artifact, or land card, that player puts it directly onto the battlefield. If it is an instant or sorcery, that player casts it without paying its casting cost.' },
-            { title: 'Rediscovery', attr: 'classes', type: 'chaos', text: 'All cards that have been exiled face up are shuffled into their owners’ libraries.' },
-            { title: 'Diminishing Returns', attr: 'classes', type: 'chaos', text: 'Each player shuffles his or her hand and graveyard into his or her library. Each player exiles the top four cards of his or her library. Then each player draws up to seven cards.' },
-            { title: 'Power Surge', attr: 'classes', type: 'chaos', text: 'For each untapped land you control, Power Surge deals 1 damage to you.' },
-            { title: 'Ancestral Lands', attr: 'classes', type: 'chaos', text: 'Search your library for a basic land card of each type you do not control and put those lands onto the battlefield. Shuffle your library.' },
-            { title: 'WackyLand', attr: 'classes', type: 'chaos', text: 'Roll on WackyLand.' },
-            { title: 'Chaos Storm', attr: 'classes', type: 'chaos', text: 'Roll two Chaos Rolls and reverse the direction of turns.' },
-            { title: 'Innocent Blood', attr: 'classes', type: 'chaos', text: 'Each player sacrifices a creature.' },
-            { title: 'Charm', attr: 'classes', type: 'chaos', text: 'Choose one – Deal 1 damage to any number of targets, then draw a card; or draw cards until you have as many cards in hand as the player with the most cards in hand, then draw a card.' },
-            { title: 'Global Half-Hymn', attr: 'classes', type: 'chaos', text: 'Each player discards one card.' },
-            { title: 'Trade-In', attr: 'classes', type: 'chaos', text: 'Sacrifice a creature. Put target creature card from your graveyard or your hand onto the battlefield.' },
-            { title: 'Go Fish', attr: 'classes', type: 'chaos', text: 'Name a nonland card. Look at all players’ hands and put all copies of the named card into your hand. If no player has the named card, draw a card (go fish).' },
-            { title: 'Blessed Wine', attr: 'classes', type: 'chaos', text: 'Gain 1 life. Draw a card.' },
-            { title: 'Psionic Blast', attr: 'classes', type: 'chaos', text: 'Deal 4 damage to target creature or player and 2 damage to yourself.' },
-            { title: 'Vampiric Tutor', attr: 'classes', type: 'chaos', text: 'Search your library for a card, then shuffle your library and put that card on top of it. You lose 2 life. At the beginning of your upkeep, you may pay B or 2 life to draw a card.' },
-            { title: 'Shortcut', attr: 'classes', type: 'chaos', text: 'Target creature gains a landwalk ability of your choice.' },
-            { title: 'EnchantWorldLand', attr: 'classes', type: 'chaos', text: 'Roll on EnchantWorldLand.' },
-            { title: 'Time Walk', attr: 'classes', type: 'chaos', text: 'Take an extra turn after this one.' },
-            { title: 'Wanna Bet?', attr: 'classes', type: 'chaos', text: 'Look at target player’s hand and choose a card in it. That player looks at your hand and chooses a card in it. Flip a coin. The winner of the flip puts the card he or she chose into his or her hand.' },
-            { title: 'Hurricane', attr: 'classes', type: 'chaos', text: 'Hurricane deals 1d6 damage to each creature with flying and each player.' },
-            { title: 'Lat-Nam’s Legacy', attr: 'classes', type: 'chaos', text: 'Shuffle a card from your hand into your library. Draw two cards.' },
-            { title: 'Magical Sleight', attr: 'classes', type: 'chaos', text: 'Change all occurrences of one mana symbol on any card in play to any other mana symbol. This change does not end at the end of the turn.' },
-            { title: 'Spring Cleaning', attr: 'classes', type: 'chaos', text: 'Destroy all lands. Any player may pay 1 life to prevent up to two lands he or she controls from being destroyed this way. Players may pay any amount of life in this way.' },
-            { title: 'Brandish', attr: 'classes', type: 'chaos', text: 'All cards in all libraries, in all hands, and on the battlefield not controlled by their owners go to their owners’ graveyards.' },
-            { title: 'East Wind', attr: 'classes', type: 'chaos', text: 'As long as you remain in the game, until your next turn, if no other player is affected by East Wind, whenever any player would gain life you gain it instead.' },
-            { title: 'Fall Harvest', attr: 'classes', type: 'chaos', text: 'Sacrifice a land. Gain life equal to the number of lands you control.' },
-            { title: 'Steal Artifact', attr: 'classes', type: 'chaos', text: 'Gain control of target artifact.' },
-            { title: 'Feast or Famine', attr: 'classes', type: 'chaos', text: 'Choose one – Put a 2/2 black Zombie creature token onto the battlefield; or destroy target nonartifact, nonblack creature and it can’t be regenerated.' },
-            { title: 'Chaos Tune', attr: 'classes', type: 'chaos', text: 'Choose any roll from the Chaos List and resolve it.' })
-          //OG enchant world rolls array
-          enchantWorldRollArray.push(
-            { title: 'Masquerade Cycle', attr: 'classes', type: 'chaos', text: 'Any player may pay the activation cost of any activated ability of any nonland permanent.' },
-            { title: 'Mirari Concentrate', attr: 'classes', type: 'chaos', text: 'All creatures gain +1/+1. All lands produce an additional mana of the appropriate type when tapped for mana. Whenever a player plays an instant or sorcery spell, that player may pay 4. If he or she does, he or she puts a copy of that spell onto the stack. That player may choose new targets for the copy.' },
-            { title: 'Concordant Crossroads', attr: 'classes', type: 'chaos', text: 'All creatures gain haste.' },
-            { title: 'Odyssey Block', attr: 'classes', type: 'chaos', text: 'Each instant and sorcery gains flashback. The flashback cost is equal to the card’s mana cost.' },
-            { title: 'Howling Mine', attr: 'classes', type: 'chaos', text: 'At the beginning of each player’s draw step that player draws an extra card.' },
-            { title: 'Cursed Rod', attr: 'classes', type: 'chaos', text: 'All creatures lose all abilities.' },
-            { title: 'Urza’s Epic', attr: 'classes', type: 'chaos', text: 'All cards without cycling cost an additional 1 to play and gain “Cycling: 2.”' },
-            { title: 'Bottomless Pit', attr: 'classes', type: 'chaos', text: 'At the beginning of each player’s upkeep, that player discards a card at random.' },
-            { title: 'Invasion Block', attr: 'classes', type: 'chaos', text: 'At the beginning of each player’s upkeep, that player gains 1 life for each basic land type among lands he or she controls and loses 1 life for each basic land type he or she does not control.' },
-            { title: 'Aluren', attr: 'classes', type: 'chaos', text: 'Any player may play creature cards with converted mana cost 3 or less without paying their mana cost and as though they had flash.' },
-            { title: 'Circle of Life', attr: 'classes', type: 'chaos', text: 'Whenever a card would go to the graveyard from play, shuffle it into its owner’s library instead.' },
-            { title: 'Locomotion Drain', attr: 'classes', type: 'chaos', text: 'Creatures with defender may attack as though they didn’t have defender. Creatures without defender can’t attack.' },
-            { title: 'Rath Cycle', attr: 'classes', type: 'chaos', text: 'Each instant and sorcery gains buyback. The buyback cost is life equal to its mana cost.' },
-            { title: 'Psychic Battle', attr: 'classes', type: 'chaos', text: 'Whenever a player chooses one or more targets, each player reveals the top card of his or her library. The player who reveals the card with the highest converted mana cost may change the target or targets. If two or more cards are tied for highest cost, the target or targets remain unchanged. Changing targets this way doesn’t trigger abilities of permanents named Psychic Battle.' },
-            { title: 'City of Solitude', attr: 'classes', type: 'chaos', text: 'Players can cast spells and activate abilities only during their own turns.' },
-            { title: 'Forsaken Wastes', attr: 'classes', type: 'chaos', text: 'Players can’t gain life. At the beginning of each player’s upkeep, that player loses 1 life.' },
-            { title: 'Gift of the Land', attr: 'classes', type: 'chaos', text: 'Whenever a player draws a card, he or she reveals the card drawn. If it is a land, he or she gains 2 life. Otherwise, he or she loses 1 life.' },
-            { title: 'React', attr: 'classes', type: 'chaos', text: 'Each player may play spells and activate abilities in response to Chaos Rolls.' },
-            { title: 'Up the Stakes', attr: 'classes', type: 'chaos', text: 'Double all life gained or damage dealt outside the Chaos Phase.' },
-            { title: 'Rainbow Vortex', attr: 'classes', type: 'chaos', text: 'Basic lands may tap for any colour of mana. When a nonbasic land enters the battlefield, its controller chooses a colour. That land loses all other abilities but gains “Tap: Add one of the chosen colour to your mana pool.”' })
-          //OG wacky rolls array
-          wackyRollArray.push(
-            { title: 'Time Sprint', attr: 'classes', type: 'wacky', text: 'Take two extra turns after this one.' },
-            { title: 'Musical Chairs', attr: 'classes', type: 'wacky', text: 'Each player moves one seat in the direction the turns are proceeding.' },
-            { title: 'It’s a New Ruling', attr: 'classes', type: 'wacky', text: 'Add up all numbers on target permanent and redistribute them however you wish.' },
-            { title: 'Master of Chaos', attr: 'classes', type: 'wacky', text: 'Until your next turn, you may choose all targets of Chaos Rolls.' },
-            { title: 'Pricing', attr: 'classes', type: 'wacky', text: 'Each player may sacrifice any number of permanents. Then, for each permanent that isn’t a basic land, each player loses 3 life for each rare he or she controls, 2 life for each uncommon he or she controls, and 1 life for each common he or she controls.' },
-            { title: 'Rainbow Vale', attr: 'classes', type: 'wacky', text: 'Put a token land named Rainbow Vale onto the battlefield under your control. It has “Tap: Add one mana of any colour to your mana pool. An opponent gains control of Rainbow Vale at the beginning of the next end step.”' },
-            { title: 'Musical Life', attr: 'classes', type: 'wacky', text: 'Each player’s life total becomes that of the player before him or her in the turn order.' },
-            { title: 'Calculator', attr: 'classes', type: 'wacky', text: 'Add or subtract 1d6 on any number of any permanent on the battlefield.' },
-            { title: 'Turn Twister', attr: 'classes', type: 'wacky', text: 'Until your next turn, at the end of each turn, randomly choose who takes the next turn.' },
-            { title: 'Escape', attr: 'classes', type: 'wacky', text: 'Target land you control gains “At end of your upkeep, exile a creature you control. Flip a coin. On heads, target player of your choice gains control of this land. When this land leaves the battlefield, all creatures exiled by it enter the battlefield under control of the last player to control it.”' },
-            { title: 'Magnet', attr: 'classes', type: 'wacky', text: 'Target creature gains “While choosing targets as part of casting a spell or activating an ability, each player must choose this creature if able.”' },
-            { title: 'Wrath of the Random', attr: 'classes', type: 'wacky', text: 'Destroy all permanents with a converted casting cost equal to the roll on 1d6.' },
-            { title: 'Chaos Ward', attr: 'classes', type: 'wacky', text: 'Target creature gains Protection from Chaos. This does not end at the end of the turn.' },
-            { title: 'Fun Time', attr: 'classes', type: 'wacky', text: 'Roll once on Chaos List, WackyLand, and EnchantWorldLand.' },
-            { title: 'Time Wall Safe', attr: 'classes', type: 'wacky', text: 'Skip one of your phases this turn. Get a Safe counter for that phase. At any time you could play an instant, you may sacrifice a Safe counter to take the phase that was skipped.' },
-            { title: 'nruT', attr: 'classes', type: 'wacky', text: 'Your turn begins with the end of the turn phase and proceeds backward through the order of phases and steps: end of turn, second main phase, combat, first main phase, draw, upkeep, untap, Chaos Phase. When you reach your Chaos Phase in this way, roll a Chaos Roll. Resolve that roll and end your turn.' },
-            { title: 'Expansion in a Bottle', attr: 'classes', type: 'wacky', text: 'Choose an expansion. Destroy all nonland permanents from the chosen expansion.' },
-            { title: 'Time Crawl Jackpot!', attr: 'classes', type: 'wacky', text: 'Put a turn counter in the Time Crawl Jackpot. After this turn, you take an additional turn for each turn counter in the Time Crawl Jackpot.' })
-        }
       });
     }); 
   </script>
@@ -655,20 +364,245 @@
       { title: 'Life\'s not fair', attr: 'passive', type: 'chaos', text: 'The player with the highest life total draws 2 cards. All other players draw 1 card.' },
       { title: 'Giant Growth', attr: 'aggressive', type: 'chaos', text: 'Target creature gets +7/+7 until end of turn.' },
       { title: 'Rickrolled', attr: 'aggressive', type: 'chaos', text: 'Lose your turn. If your name is Rick, you lose 1 life.' },
-      // { title: 'name', attr: 'classes', type: 'chaos', text: 'text.' }, 
-    ]
-    //enchant world rolls array
-    let enchantWorldRollArray = [
       { title: 'Rage', attr: 'aggressive', type: 'enchantWorld', text: 'Creatures cannot block. All creatures must attack each turn if able.' },
       { title: '420', attr: 'passive', type: 'enchantWorld', text: 'Until your next turn, creatures do not untap as normal during their controller\'s untap steps.' },
       { title: 'Sunken Hope', attr: 'passive', type: 'enchantWorld', text: 'At the beginning of each player\'s upkeep, that player returns a creature they control to its owner\'s hand.' },
-    ]
-    //wacky rolls array
-    let wackyRollArray = [
       { title: 'Touchy Feely', attr: 'aggressive', type: 'wacky', text: 'Any permanent on the battlefield that is physically touching another permanent is returned to its owner\'s hand.' },
       { title: 'Gabmlin\' man', attr: 'other', type: 'wacky', text: 'Play Rock Paper Scissors with target player. If you win, take an extra turn after this one. If you lose, skip your turn.' },
       { title: 'Supernatural Brothers', attr: 'classes', type: 'wacky', text: 'Destroy all creatures on the battlefield that do not exist in real life.' },
       { title: 'Super Mario Brothers ft. Shredder', attr: 'classes', type: 'wacky', text: 'Destroy all Turtles.' },
+      { title: 'Eureka', attr: 'classes', type: 'chaos', text: 'Beginning with you and proceeding in turn order, each player may choose a Planeswalker, creature, enchantment, artifact, or land card in his or her hand and put that card onto the battlefield. Continue until each player in turn has declined to put a card onto the battlefield.' },
+      { title: 'Air Strike', attr: 'classes', type: 'chaos', text: 'Put three 2/1 Eagle tokens of all colours with flying and haste onto the battlefield. At the end of the turn, sacrifice all Eagle tokens.' },
+      { title: 'Feldon’s Cane', attr: 'classes', type: 'chaos', text: 'Reshuffle your graveyard into your library.' },
+      { title: 'EnchantWorldLand', attr: 'classes', type: 'chaos', text: 'Roll on EnchantWorldLand.' },
+      { title: 'Footbottom Feast', attr: 'classes', type: 'chaos', text: 'Put any number of creatures from your graveyard on top of your library. Draw a card.' },
+      { title: 'Tranquility', attr: 'classes', type: 'chaos', text: 'Destroy all enchantments.' },
+      { title: 'Roll three times', attr: 'classes', type: 'chaos', text: 'Roll three Chaos Rolls.' },
+      { title: 'Rushing River', attr: 'classes', type: 'chaos', text: 'Return target nonland permanent to its owner’s hand. You may sacrifice a land to return another target nonland permanent to its owner’s hand.' },
+      { title: 'Tainted Energy', attr: 'classes', type: 'chaos', text: 'Choose one – Lose 1d6 life; or target opponent gains 1d6 life.' },
+      { title: 'Roll that Fork', attr: 'classes', type: 'chaos', text: 'Get a RollFork Counter. Sacrifice RollFork to duplicate the effects of any roll just rolled. You choose all new targets.' },
+      { title: 'Secret Cache', attr: 'classes', type: 'chaos', text: 'Shuffle your deck. If your top card after the shuffle is a Planeswalker, creature, enchantment, artifact, or land card, put it onto the battlefield. If not, lose 1 life and shuffle again. Repeat until you get a Planeswalker, creature, enchantment, artifact, or land card.' },
+      { title: 'Exhume', attr: 'classes', type: 'chaos', text: 'Each player puts a creature card from his or her graveyard onto the battlefield.' },
+      { title: 'Neutral Plane', attr: 'classes', type: 'chaos', text: 'Destroy all non-Aura enchantments.' },
+      { title: 'Sworn Enemy', attr: 'classes', type: 'chaos', text: 'Target creature gains protection from a colour of your choice until the end of turn.' },
+      { title: 'Abandon Hope', attr: 'classes', type: 'chaos', text: 'Discard any number of cards from your hand. Look at target opponent’s hand and choose that number of cards from it. That player discards those cards.' },
+      { title: 'Mute', attr: 'classes', type: 'chaos', text: 'You may not cast a spell this turn.' },
+      { title: 'Threshold Command', attr: 'classes', type: 'chaos', text: 'Each player puts cards from the top of his or her library into his or her graveyard until there are at least seven cards in his or her graveyard.' },
+      { title: 'Balance', attr: 'classes', type: 'chaos', text: 'Except the player who controls the fewest lands, each player sacrifices lands until all players control the same number of lands as the player who controls the fewest. Players do the same for creatures and for cards in hand.' },
+      { title: 'Ancestral Recall', attr: 'classes', type: 'chaos', text: 'Target player draws three cards.' },
+      { title: 'Memory Lapse', attr: 'classes', type: 'chaos', text: 'Skip your draw phase this turn.' },
+      { title: 'Terminate', attr: 'classes', type: 'chaos', text: 'Destroy target creature.' },
+      { title: 'Prosperity', attr: 'classes', type: 'chaos', text: 'Each player draw 1d10 cards. (Roll once for everybody.)' },
+      { title: 'Enlightened Tutor', attr: 'classes', type: 'chaos', text: 'Search your library for an artifact or enchantment card and reveal that card. Shuffle your library and then put the revealed card on top. At the beginning of your upkeep, you may pay W or 3 to draw a card.' },
+      { title: 'Gauntlet of Chaos', attr: 'classes', type: 'chaos', text: 'Exchange control of target artifact, creature, or land you control for control of target permanent of the same type an opponent controls. Then, destroy all enchantments enchanted on those permanents.' },
+      { title: 'Déjà Vu', attr: 'classes', type: 'chaos', text: 'Each player shuffles the cards in his or her graveyard and puts those cards on top of his or her library.' },
+      { title: 'Manipulate Fate', attr: 'classes', type: 'chaos', text: 'Search your library for three cards, exile them, then shuffle your library. Draw a card.' },
+      { title: 'Syphon Soul', attr: 'classes', type: 'chaos', text: 'Deal 2 damage to each opponent and gain 1 life for each damage dealt.' },
+      { title: 'Demonic Tutor', attr: 'classes', type: 'chaos', text: 'Search your library for a card and put it in your hand. Then, shuffle your library.' },
+      { title: 'Simplicity’s Reward', attr: 'classes', type: 'chaos', text: 'Each player gains 1 life for each basic land he or she controls. Each player takes 1 damage for each nonbasic land he or she controls.' },
+      { title: 'Solid Fog', attr: 'classes', type: 'chaos', text: 'As long as you remain in the game, until your next turn, no attack phases may be declared.' },
+      { title: 'Mating Call', attr: 'classes', type: 'chaos', text: 'At the beginning of your first main phase, you may pay 1 plus the converted mana cost of a creature in any graveyard. If you do, exile that creature card and put a token copy of that creature onto the battlefield under your control.' },
+      { title: 'Better Off Dead', attr: 'classes', type: 'chaos', text: 'Place a creature from your graveyard onto the battlefield under target opponent’s control.' },
+      { title: 'Nevinyrral’s lil’ Disk', attr: 'classes', type: 'chaos', text: 'Each player sacrifices a creature, an enchantment, and an artifact.' },
+      { title: 'Seeds of Innocence', attr: 'classes', type: 'chaos', text: 'Destroy all artifacts. For each artifact destroyed, that artifact’s controller gains life equal to that artifact’s converted casting cost.' },
+      { title: 'Massive Mana Clash', attr: 'classes', type: 'chaos', text: 'Each player flips a coin. Each time a player’s coin comes up tails, that player takes 1 damage. When a player’s coin comes up heads, he or she stops flipping. Repeat until each player’s coin comes up heads' },
+      { title: 'Storm Seeker', attr: 'classes', type: 'chaos', text: 'Target player takes 1 damage for each card in his or her hand.' },
+      { title: 'Collective Unconscious', attr: 'classes', type: 'chaos', text: 'Draw a card for each creature you control.' },
+      { title: 'Chaos Knowledge', attr: 'classes', type: 'chaos', text: 'Roll two Chaos Rolls (without resolving either), then choose one roll to ignore. Resolve the other roll.' },
+      { title: 'Morbid Hunger', attr: 'classes', type: 'chaos', text: 'Deal 3 damage to any target. Gain 3 life.' },
+      { title: 'Essence Vortex', attr: 'classes', type: 'chaos', text: 'Destroy target creature unless its controller pays life equal to its toughness. It cannot be regenerated.' },
+      { title: 'Stupor', attr: 'classes', type: 'chaos', text: 'Target opponent discards a card at random, then discards a card.' },
+      { title: 'Braingeyser', attr: 'classes', type: 'chaos', text: 'Target player draws 1d6 cards.' },
+      { title: 'Stormbind', attr: 'classes', type: 'chaos', text: 'Discard a card at random: Deal 2 damage to target creature or player. You may pay 2 to repeat this process until the end of the Chaos Phase.' },
+      { title: 'Necropotence', attr: 'classes', type: 'chaos', text: 'Pay 1 life: Exile the top card of your library face down. Put that card into your hand at the beginning of your next end step. You may do this as many times as you wish but only during this Chaos Phase. Skip your draw step this turn.' },
+      { title: 'Earthquake', attr: 'classes', type: 'chaos', text: 'Deal 1d6 damage to each creature without flying and each player.' },
+      { title: 'Stream of life', attr: 'classes', type: 'chaos', text: 'Target player gains 1d10 life.' },
+      { title: 'Fumarole', attr: 'classes', type: 'chaos', text: 'Lose 3 life: Destroy target land and target creature.' },
+      { title: 'Chaos Lore', attr: 'classes', type: 'chaos', text: 'Choose one – Search your library for two basic lands and put them onto the battlefield; or search your library for a nonbasic land and put it onto the battlefield. Shuffle your library.' },
+      { title: 'Winds of Change', attr: 'classes', type: 'chaos', text: 'Each player shuffles the cards from his or her hand into his or her library, then draws that many cards.' },
+      { title: 'WackyLand III', attr: 'classes', type: 'chaos', text: 'Roll 1d3 times on WackyLand.' },
+      { title: 'Polymorph', attr: 'classes', type: 'chaos', text: 'Destroy target creature. It can’t be regenerated. Its controller reveals cards from the top of his or her library until he or she reveals a creature card. The player puts that card onto the battlefield, then shuffles all other cards revealed this way into his or her library.' },
+      { title: 'Gold Strike', attr: 'classes', type: 'chaos', text: 'All of your lands produce an additional mana of the appropriate type when tapped for mana this turn.' },
+      { title: 'Portent', attr: 'classes', type: 'chaos', text: 'Look at the top three cards of target player’s library, then put them back in any order. You may have that player shuffle his or her library. Draw a card.' },
+      { title: 'Revenge is Sweet', attr: 'classes', type: 'chaos', text: 'Sacrifice a permanent: destroy a permanent of the same type.' },
+      { title: 'Soul Leech', attr: 'classes', type: 'chaos', text: 'Deal 1 damage to up to three target creatures or players. For each point of damage dealt this way, gain 1 life.' },
+      { title: 'Stasis', attr: 'classes', type: 'chaos', text: 'Skip your untap phase this turn. At the beginning of upkeep for each player who is affected by this effect, that player may pay U or 3. If that player does, the next player in turn order gains this effect.' },
+      { title: 'Pity', attr: 'classes', type: 'chaos', text: 'The player with lowest amount of life gains 5 life. If more than one player has the lowest amount of life, ignore this effect.' },
+      { title: 'Creeping Mold', attr: 'classes', type: 'chaos', text: 'Destroy target artifact, land, or enchantment.' },
+      { title: 'Mutual Betrayal', attr: 'classes', type: 'chaos', text: 'Look at target opponent’s hand and choose a card. That player then looks at your hand and chooses a card. Exchange the cards chosen this way.' },
+      { title: 'Chain Lightning', attr: 'classes', type: 'chaos', text: 'Deal 3 damage to target creature or player. Then that player or that creature’s controller may pay RR. If the player does, he or she may copy this spell and may choose a new target for that copy.' },
+      { title: 'Mana Short', attr: 'classes', type: 'chaos', text: 'Tap all lands you control. Lands you control do not untap during your untap phase this turn.' },
+      { title: 'Rolling Thunder', attr: 'classes', type: 'chaos', text: 'Deal 1d6-1 damage divided any way you choose among any number of target creatures or players.' },
+      { title: 'Goblin Game', attr: 'classes', type: 'chaos', text: 'Each player hides at least one item, then all players reveal them simultaneously. Each player loses life equal to the number of items he or she revealed. The player who revealed the fewest items then loses half his or her life, rounded up. If two or more players are tied for fewest, each loses half his or her life, rounded up.' },
+      { title: 'EnchantWorldLand+', attr: 'classes', type: 'chaos', text: 'Leave any EnchantWorldLand in play. Roll on EnchantWorldLand and add that result to the battlefield.' },
+      { title: 'Commanding Presence', attr: 'classes', type: 'chaos', text: 'Opponents may not play spells or activate abilities until end of turn.' },
+      { title: 'Illusions of Grandeur', attr: 'classes', type: 'chaos', text: 'Gain 20 life and four illusion counters. At the beginning of your upkeep, remove an illusion counter. When the last illusion counter is removed, lose 20 life.' },
+      { title: 'Backflash', attr: 'classes', type: 'chaos', text: 'This turn, whenever a card is cast from the graveyard using flashback, it is returned to its owner’s hand instead of being exiled.' },
+      { title: 'Never Say Die', attr: 'classes', type: 'chaos', text: 'Roll 1d6. All creatures in all graveyards with toughness less than or equal to the rolled number are returned to the battlefield under their owners’ control.' },
+      { title: 'WackyLand', attr: 'classes', type: 'chaos', text: 'Roll on WackyLand.' },
+      { title: 'Reclaim', attr: 'classes', type: 'chaos', text: 'Put target card from your graveyard on top of your library. At the beginning of your upkeep, you may pay G or 3 to draw a card.' },
+      { title: 'Prophetic Bolt', attr: 'classes', type: 'chaos', text: 'Deal 4 damage to target creature or player. Look at the top four cards of your library. Put one of those cards into your hand and the rest on the bottom of your library in any order.' },
+      { title: 'Hymn to Tourach', attr: 'classes', type: 'chaos', text: 'Target player discards two cards at random.' },
+      { title: 'Jester’s Cap', attr: 'classes', type: 'chaos', text: 'Search through target player’s library for any three cards and exile those cards. That player then shuffles his or her library.' },
+      { title: 'Agonizing Memories', attr: 'classes', type: 'chaos', text: 'Look at target player’s hand and choose two cards from it. Put those cards on top of that player’s library in any order.' },
+      { title: 'Time Crawl', attr: 'classes', type: 'chaos', text: 'Pass the dice; your turn is over. Put a turn counter on the Time Crawl Jackpot.' },
+      { title: 'Natural Order', attr: 'classes', type: 'chaos', text: 'Sacrifice a creature: Search your library for a creature card of the same colour and put that card onto the battlefield. Then shuffle your library.' },
+      { title: 'Relentless Assault', attr: 'classes', type: 'chaos', text: 'After your attack phase, untap all creatures that attacked this turn. After this main phase, there is an additional combat phase followed by an additional main phase.' },
+      { title: 'Grinning Totem', attr: 'classes', type: 'chaos', text: 'Search target opponent’s library for a card and exile it. Then that player shuffles his or her library. Until the beginning of your next upkeep, you may play that card. At the beginning of your next upkeep, if you haven’t played it, put it into its owner’s graveyard.' },
+      { title: 'Pestilence', attr: 'classes', type: 'chaos', text: 'Deal 1d6 damage to each creature and each player.' },
+      { title: 'Circle Shield', attr: 'classes', type: 'chaos', text: 'Get three shield counters. Whenever you would take damage, instead remove a shield counter.' },
+      { title: 'Impulse', attr: 'classes', type: 'chaos', text: 'Look at the top four cards of your library. Put one of them into your hand and the rest on the bottom of your library in any order.' },
+      { title: 'Temporal Spring', attr: 'classes', type: 'chaos', text: 'Put target permanent on top of its owner’s library' },
+      { title: 'Gamble', attr: 'classes', type: 'chaos', text: 'Search your library for a card, put that card into your hand, discard a card at random, then shuffle your library.' },
+      { title: 'Desert Twister', attr: 'classes', type: 'chaos', text: 'Destroy target permanent.' },
+      { title: 'Roll Three Times', attr: 'classes', type: 'chaos', text: 'Roll three Chaos Rolls.' },
+      { title: 'WackyLand', attr: 'classes', type: 'chaos', text: 'Roll on WackyLand.' },
+      { title: 'Forget', attr: 'classes', type: 'chaos', text: 'Target player discards two cards, then draws as many cards as he or she discarded this way.' },
+      { title: 'Gambit', attr: 'classes', type: 'chaos', text: 'Each player chooses a card in his or her hand. Each player then reveals the card chosen this way. Put the creature with the lowest converted mana cost onto the battlefield under its owner’s control, then repeat with enchantments and artifacts. If two or more cards tie for the lowest converted mana cost, put all those cards onto the battlefield.' },
+      { title: 'Luck', attr: 'classes', type: 'chaos', text: 'Reveal your hand and choose an instant or sorcery card from it at random. Play that spell without paying its casting cost. If X is in the casting cost, X is 0.' },
+      { title: 'Windows of Opportunity', attr: 'classes', type: 'chaos', text: 'Target player taps all artifacts, lands, and creatures he or she controls. At the end of your turn, tap all artifacts, lands, and creatures you control.' },
+      { title: 'Energy Bolt', attr: 'classes', type: 'chaos', text: 'Choose one – Deal 1d6 damage to target player or gain 1d6 life.' },
+      { title: 'Price of Knowledge', attr: 'classes', type: 'chaos', text: 'Skip your next turn. Draw four cards.' },
+      { title: 'Tremble', attr: 'classes', type: 'chaos', text: 'Each player sacrifices a land.' },
+      { title: 'Jokulhaups Light', attr: 'classes', type: 'chaos', text: 'Each player sacrifices one land, one creature, and one artifact.' },
+      { title: 'Cone of Flame', attr: 'classes', type: 'chaos', text: 'Choose three target creatures or players. Deal 1 damage to the first, 2 damage to the second, and 3 damage to the third.' },
+      { title: 'Fact or Fiction', attr: 'classes', type: 'chaos', text: 'Reveal the top five cards of your library. An opponent separates those cards into two piles. Put one pile into your hand and the other into your graveyard.' },
+      { title: 'Happy Balance', attr: 'classes', type: 'chaos', text: 'Each player reveals cards from the top of his or her library and puts lands and creatures revealed in this way onto the battlefield until he or she controls a number of lands and creatures equal to the number of lands controlled by the player who controls the most and the number of creatures equal to the number of creatures controlled by the player who controls the most. Place cards revealed in this way but not put onto the battlefield on top of each player’s library. Each player then shuffles his or her library and draws cards until each player has as many cards in hand as the player with the highest number of cards in hand.' },
+      { title: 'Confiscate', attr: 'classes', type: 'chaos', text: 'Gain control of target permanent.' },
+      { title: 'CounterRoll', attr: 'classes', type: 'chaos', text: 'Get a CounterRoll counter. Sacrifice CounterRoll to counter the effects of any roll.' },
+      { title: 'Flux', attr: 'classes', type: 'chaos', text: 'Each player discards any number of cards, then draws that many cards. Draw a card.' },
+      { title: 'Wager', attr: 'classes', type: 'chaos', text: 'Target opponent names a number and reveals cards from his or her library until he or she reveals a spell of the named casting cost, then puts that card into his or her hand. That player then puts all other revealed cards into his or her graveyard and takes 1 damage for each card put into the graveyard in this manner.' },
+      { title: 'Wheel of Fortune', attr: 'classes', type: 'chaos', text: 'Each player discards his or her hand and draws seven cards.' },
+      { title: 'Double-Sided Blade', attr: 'classes', type: 'chaos', text: 'Roll 1d6. Any combination of players of your choice draws that many cards. For each card you draw, take 2 damage. For each card drawn by an opponent, that player takes 1 damage.' },
+      { title: 'Clash of Chaos', attr: 'classes', type: 'chaos', text: 'Choose target opponent. Flip a coin. Opponent calls it in the air. Loser of the flip takes 2 damage. Winner decides to flip again or to stop.' },
+      { title: 'Master Chef', attr: 'classes', type: 'chaos', text: 'Choose one – Get a CounterRoll counter (sacrifice CounterRoll to counter the effects of any roll); or get a RollFork counter (sacrifice RollFork to duplicate the effects of any Chaos effect just rolled; you choose all new targets).' },
+      { title: 'All Hallow’s Eve Light', attr: 'classes', type: 'chaos', text: 'Each player puts up to two creatures from his or her graveyard onto the battlefield.' },
+      { title: 'Mana Barbs', attr: 'classes', type: 'chaos', text: 'Whenever you tap a land for mana, you take 1 damage.' },
+      { title: 'Retribution', attr: 'classes', type: 'chaos', text: 'Choose two target creatures controlled by one player. That player sacrifices one of those creatures. Put a -1/-1 counter on the other.' },
+      { title: 'WackyLand', attr: 'classes', type: 'chaos', text: 'Roll on WackyLand.' },
+      { title: 'Infernal Tutor', attr: 'classes', type: 'chaos', text: 'Choose a number. Reveal cards in your library until you reveal a permanent with a converted mana cost equal to the chosen number. Put that card onto the battlefield and exile all other cards revealed this way.' },
+      { title: 'Mind Bend', attr: 'classes', type: 'chaos', text: 'Change the text of target permanent by replacing all instances of one colour word or basic land type with another. This does not end at the end of the turn.' },
+      { title: 'Drain Life', attr: 'classes', type: 'chaos', text: 'Deal 1d6 damage to target creature or player. You gain life equal to the damage dealt, but not more life than that creature’s toughness or that player’s life total.' },
+      { title: 'Desperate Times', attr: 'classes', type: 'chaos', text: 'Look at the top three cards of your library. Put one in your hand and the other two into your graveyard. Roll again.' },
+      { title: 'Distract: After your turn, you and all cards you control phase out.' },
+      { title: 'Patience', attr: 'classes', type: 'chaos', text: 'Lose 2 life and gain three focus counters. At the beginning of your upkeep, remove a focus counter. When the last focus counter is removed, gain 5 life.' },
+      { title: 'Price of Immortality', attr: 'classes', type: 'chaos', text: 'Discard a card. Gain 4 life.' },
+      { title: 'Gaea’s Charm', attr: 'classes', type: 'chaos', text: 'Choose one – Target player shuffles up to three cards from his or her graveyard into his or her library; or exile three cards from target player’s graveyard. Draw a card.' },
+      { title: 'Five Card', attr: 'classes', type: 'chaos', text: 'Each player reveals the top five cards of his or her library. The player whose revealed cards have the highest converted mana cost puts those five cards into his or her hand, and all other players place their revealed cards in their graveyards.' },
+      { title: 'Ill-Gotten Gains', attr: 'classes', type: 'chaos', text: 'Each player discards his or her hand, then returns up to three cards from his or her graveyard to his or her hand.' },
+      { title: 'Murphy’s Law', attr: 'classes', type: 'chaos', text: 'Roll two Chaos Rolls (without resolving either), then target opponent chooses one roll to resolve and makes all decisions in regards to it. Ignore the other roll.' },
+      { title: 'Regrowth', attr: 'classes', type: 'chaos', text: 'Return target card from your graveyard to your hand.' },
+      { title: 'Chaos Storm', attr: 'classes', type: 'chaos', text: 'Roll two Chaos Rolls and reverse the direction of turns.' },
+      { title: 'CounterRoll', attr: 'classes', type: 'chaos', text: 'Get a CounterRoll counter. Sacrifice CounterRoll to counter the effects of any roll.' },
+      { title: 'Storm Seeker Misses', attr: 'classes', type: 'chaos', text: 'Take 1 damage for each card in your hand.' },
+      { title: 'Price of Strength', attr: 'classes', type: 'chaos', text: 'Lose 4 life. Place two +1/+1 counters on each creature you control.' },
+      { title: 'Global Stream of Life', attr: 'classes', type: 'chaos', text: 'Each player gains 1d10 life. (Roll once for everybody.)' },
+      { title: 'Disenchant', attr: 'classes', type: 'chaos', text: 'Destroy target artifact or enchantment.' },
+      { title: 'Gathering', attr: 'classes', type: 'chaos', text: 'Gain 1 life for each creature in play.' },
+      { title: 'Gift of the Magi', attr: 'classes', type: 'chaos', text: 'Choose one – Fain 3 life; draw three cards; or add three mana of any colour to your mana pool at the beginning of your next main phase.' },
+      { title: 'RollFork', attr: 'classes', type: 'chaos', text: 'Get a RollFork Counter. Sacrifice RollFork to duplicate the effects of any roll just rolled. You choose all new targets.' },
+      { title: 'Price of Power', attr: 'classes', type: 'chaos', text: 'Sacrifice a land. Deal 4 damage to any target.' },
+      { title: 'EnchantWorldLand+', attr: 'classes', type: 'chaos', text: 'Leave any EnchantWorldLand in play. Roll on EnchantWorldLand and add that result to the battlefield.' },
+      { title: 'Pillage', attr: 'classes', type: 'chaos', text: 'Destroy target artifact or land. It cannot be regenerated.' },
+      { title: 'Stronghold Discipline', attr: 'classes', type: 'chaos', text: 'Each player loses 1 life for each creature he or she controls.' },
+      { title: 'Soothing Balm', attr: 'classes', type: 'chaos', text: 'Target player gains 5 life.' },
+      { title: 'Topple', attr: 'classes', type: 'chaos', text: 'Exile target creature with the highest power. If two or more creatures are tied for highest power, you choose which to target.' },
+      { title: 'Ray of Command', attr: 'classes', type: 'chaos', text: 'Untap target creature an opponent controls and gain control of it until end of turn. That creature gains haste until end of turn. When you lose control of the creature, tap it.' },
+      { title: 'Gerrard’s Wisdom', attr: 'classes', type: 'chaos', text: 'You gain 2 life for each card in your hand.' },
+      { title: 'Peace Talks', attr: 'classes', type: 'chaos', text: 'As long as you remain in the game, until your next turn, skip all attack phases and no player may cast a spell that targets a player.' },
+      { title: 'Arcanix Ray', attr: 'classes', type: 'chaos', text: 'Target player names a card, then reveals the top card of his or her library. If it’s the named card, the player puts it into his or her hand. Otherwise, the player puts it into his or her graveyard and Arcanix Ray deals 2 damage to him or her. Draw a card.' },
+      { title: 'Truce', attr: 'classes', type: 'chaos', text: 'Each player may draw up to two cards. For each card less than two a player draws this way, that player gains 2 life.' },
+      { title: 'Meet in the Middle', attr: 'classes', type: 'chaos', text: 'Discard or draw until you have exactly four cards in hand.' },
+      { title: 'Land Ho!', attr: 'classes', type: 'chaos', text: 'Each player may put up to three lands from his or her hand or graveyard onto the battlefield.' },
+      { title: 'Unearth', attr: 'classes', type: 'chaos', text: 'Return target creature card with converted mana cost 3 or less from your graveyard to the battlefield.' },
+      { title: 'Blue', attr: 'classes', type: 'chaos', text: 'The next spell you play is countered. When this occurs, get a CounterRoll counter. Sacrifice CounterRoll to counter the effects of any roll.' },
+      { title: 'Wackyland III', attr: 'classes', type: 'chaos', text: 'Roll 1d3 times on WackyLand.' },
+      { title: 'Control Magic', attr: 'classes', type: 'chaos', text: 'Gain control of target creature.' },
+      { title: 'Intimidation', attr: 'classes', type: 'chaos', text: 'Until your next turn, you cannot be attacked.' },
+      { title: 'Lightning Round', attr: 'classes', type: 'chaos', text: 'Until your next turn, when any player casts a spell, that player draws a card.' },
+      { title: 'Unhinge', attr: 'classes', type: 'chaos', text: 'Target player discards a card. Draw a card' },
+      { title: 'Calm Before the Storm', attr: 'classes', type: 'chaos', text: 'There are no Chaos Phases until your next turn. Then, until your next turn after that, players roll two Chaos Rolls per turn.' },
+      { title: 'Peek', attr: 'classes', type: 'chaos', text: 'Look at target player’s hand. Draw a card.' },
+      { title: 'Yawgmoth’s Will', attr: 'classes', type: 'chaos', text: 'Until end of turn, you may play cards from your graveyard. If a card would be put into your graveyard from anywhere this turn, exile that card instead.' },
+      { title: 'Triple EnchantWorldLand', attr: 'classes', type: 'chaos', text: 'Destroy all EnchantWorldLand effects. Roll three times on EnchantWorldLand and put all those effects in play.' },
+      { title: 'CounterRoll', attr: 'classes', type: 'chaos', text: 'Get a CounterRoll counter. Sacrifice CounterRoll to counter the effects of any roll.' },
+      { title: 'Swords to Plowshares', attr: 'classes', type: 'chaos', text: 'Exile target creature. That creature’s controller gains life equal to its power.' },
+      { title: 'Price of Support', attr: 'classes', type: 'chaos', text: 'Sacrifice a creature. Place four 1/1 Spirit tokens that are all colours onto the battlefield.' },
+      { title: 'Time Twister', attr: 'classes', type: 'chaos', text: 'Each player shuffles his or her hand and graveyard into his or her library. Each player then draws seven cards.' },
+      { title: 'Misfortune', attr: 'classes', type: 'chaos', text: 'An opponent chooses one – You place a +1/+1 counter on each creature you control and gain 4 life; or you put a -1/-1 counter on each creature that player controls and that player takes 4 damage.' },
+      { title: 'Hymn of Rebirth', attr: 'classes', type: 'chaos', text: 'Put target creature card from a graveyard onto the battlefield under your control.' },
+      { title: 'Sift', attr: 'classes', type: 'chaos', text: 'Draw three cards then choose and discard a card.' },
+      { title: 'RollFork', attr: 'classes', type: 'chaos', text: 'Get a RollFork Counter. Sacrifice RollFork to duplicate the effects of any roll just rolled. You choose all new targets.' },
+      { title: 'Conjure', attr: 'classes', type: 'chaos', text: 'Search your library for an artifact card and put it onto the battlefield. Shuffle your library.' },
+      { title: 'Helm of Obedience', attr: 'classes', type: 'chaos', text: 'Target opponent puts cards from the top of his or her library into his or her graveyard until a creature card or 1d6 cards are put into that graveyard this way, whichever comes first. If a creature card is put into that graveyard this way, put that card onto the battlefield under your control.' },
+      { title: 'Balloon', attr: 'classes', type: 'chaos', text: 'Each time you tap a land for mana this turn, gain 1 life.' },
+      { title: 'Lucky Us', attr: 'classes', type: 'chaos', text: 'Each player reveals the top card of his or her library. If that card is a Planeswalker, creature, enchantment, artifact, or land card, that player puts it directly onto the battlefield. If it is an instant or sorcery, that player casts it without paying its casting cost.' },
+      { title: 'Rediscovery', attr: 'classes', type: 'chaos', text: 'All cards that have been exiled face up are shuffled into their owners’ libraries.' },
+      { title: 'Diminishing Returns', attr: 'classes', type: 'chaos', text: 'Each player shuffles his or her hand and graveyard into his or her library. Each player exiles the top four cards of his or her library. Then each player draws up to seven cards.' },
+      { title: 'Power Surge', attr: 'classes', type: 'chaos', text: 'For each untapped land you control, Power Surge deals 1 damage to you.' },
+      { title: 'Ancestral Lands', attr: 'classes', type: 'chaos', text: 'Search your library for a basic land card of each type you do not control and put those lands onto the battlefield. Shuffle your library.' },
+      { title: 'WackyLand', attr: 'classes', type: 'chaos', text: 'Roll on WackyLand.' },
+      { title: 'Chaos Storm', attr: 'classes', type: 'chaos', text: 'Roll two Chaos Rolls and reverse the direction of turns.' },
+      { title: 'Innocent Blood', attr: 'classes', type: 'chaos', text: 'Each player sacrifices a creature.' },
+      { title: 'Charm', attr: 'classes', type: 'chaos', text: 'Choose one – Deal 1 damage to any number of targets, then draw a card; or draw cards until you have as many cards in hand as the player with the most cards in hand, then draw a card.' },
+      { title: 'Global Half-Hymn', attr: 'classes', type: 'chaos', text: 'Each player discards one card.' },
+      { title: 'Trade-In', attr: 'classes', type: 'chaos', text: 'Sacrifice a creature. Put target creature card from your graveyard or your hand onto the battlefield.' },
+      { title: 'Go Fish', attr: 'classes', type: 'chaos', text: 'Name a nonland card. Look at all players’ hands and put all copies of the named card into your hand. If no player has the named card, draw a card (go fish).' },
+      { title: 'Blessed Wine', attr: 'classes', type: 'chaos', text: 'Gain 1 life. Draw a card.' },
+      { title: 'Psionic Blast', attr: 'classes', type: 'chaos', text: 'Deal 4 damage to target creature or player and 2 damage to yourself.' },
+      { title: 'Vampiric Tutor', attr: 'classes', type: 'chaos', text: 'Search your library for a card, then shuffle your library and put that card on top of it. You lose 2 life. At the beginning of your upkeep, you may pay B or 2 life to draw a card.' },
+      { title: 'Shortcut', attr: 'classes', type: 'chaos', text: 'Target creature gains a landwalk ability of your choice.' },
+      { title: 'EnchantWorldLand', attr: 'classes', type: 'chaos', text: 'Roll on EnchantWorldLand.' },
+      { title: 'Time Walk', attr: 'classes', type: 'chaos', text: 'Take an extra turn after this one.' },
+      { title: 'Wanna Bet?', attr: 'classes', type: 'chaos', text: 'Look at target player’s hand and choose a card in it. That player looks at your hand and chooses a card in it. Flip a coin. The winner of the flip puts the card he or she chose into his or her hand.' },
+      { title: 'Hurricane', attr: 'classes', type: 'chaos', text: 'Hurricane deals 1d6 damage to each creature with flying and each player.' },
+      { title: 'Lat-Nam’s Legacy', attr: 'classes', type: 'chaos', text: 'Shuffle a card from your hand into your library. Draw two cards.' },
+      { title: 'Magical Sleight', attr: 'classes', type: 'chaos', text: 'Change all occurrences of one mana symbol on any card in play to any other mana symbol. This change does not end at the end of the turn.' },
+      { title: 'Spring Cleaning', attr: 'classes', type: 'chaos', text: 'Destroy all lands. Any player may pay 1 life to prevent up to two lands he or she controls from being destroyed this way. Players may pay any amount of life in this way.' },
+      { title: 'Brandish', attr: 'classes', type: 'chaos', text: 'All cards in all libraries, in all hands, and on the battlefield not controlled by their owners go to their owners’ graveyards.' },
+      { title: 'East Wind', attr: 'classes', type: 'chaos', text: 'As long as you remain in the game, until your next turn, if no other player is affected by East Wind, whenever any player would gain life you gain it instead.' },
+      { title: 'Fall Harvest', attr: 'classes', type: 'chaos', text: 'Sacrifice a land. Gain life equal to the number of lands you control.' },
+      { title: 'Steal Artifact', attr: 'classes', type: 'chaos', text: 'Gain control of target artifact.' },
+      { title: 'Feast or Famine', attr: 'classes', type: 'chaos', text: 'Choose one – Put a 2/2 black Zombie creature token onto the battlefield; or destroy target nonartifact, nonblack creature and it can’t be regenerated.' },
+      { title: 'Chaos Tune', attr: 'classes', type: 'chaos', text: 'Choose any roll from the Chaos List and resolve it.' },
+      { title: 'Masquerade Cycle', attr: 'classes', type: 'chaos', text: 'Any player may pay the activation cost of any activated ability of any nonland permanent.' },
+      { title: 'Mirari Concentrate', attr: 'classes', type: 'chaos', text: 'All creatures gain +1/+1. All lands produce an additional mana of the appropriate type when tapped for mana. Whenever a player plays an instant or sorcery spell, that player may pay 4. If he or she does, he or she puts a copy of that spell onto the stack. That player may choose new targets for the copy.' },
+      { title: 'Concordant Crossroads', attr: 'classes', type: 'chaos', text: 'All creatures gain haste.' },
+      { title: 'Odyssey Block', attr: 'classes', type: 'chaos', text: 'Each instant and sorcery gains flashback. The flashback cost is equal to the card’s mana cost.' },
+      { title: 'Howling Mine', attr: 'classes', type: 'chaos', text: 'At the beginning of each player’s draw step that player draws an extra card.' },
+      { title: 'Cursed Rod', attr: 'classes', type: 'chaos', text: 'All creatures lose all abilities.' },
+      { title: 'Urza’s Epic', attr: 'classes', type: 'chaos', text: 'All cards without cycling cost an additional 1 to play and gain “Cycling: 2.”' },
+      { title: 'Bottomless Pit', attr: 'classes', type: 'chaos', text: 'At the beginning of each player’s upkeep, that player discards a card at random.' },
+      { title: 'Invasion Block', attr: 'classes', type: 'chaos', text: 'At the beginning of each player’s upkeep, that player gains 1 life for each basic land type among lands he or she controls and loses 1 life for each basic land type he or she does not control.' },
+      { title: 'Aluren', attr: 'classes', type: 'chaos', text: 'Any player may play creature cards with converted mana cost 3 or less without paying their mana cost and as though they had flash.' },
+      { title: 'Circle of Life', attr: 'classes', type: 'chaos', text: 'Whenever a card would go to the graveyard from play, shuffle it into its owner’s library instead.' },
+      { title: 'Locomotion Drain', attr: 'classes', type: 'chaos', text: 'Creatures with defender may attack as though they didn’t have defender. Creatures without defender can’t attack.' },
+      { title: 'Rath Cycle', attr: 'classes', type: 'chaos', text: 'Each instant and sorcery gains buyback. The buyback cost is life equal to its mana cost.' },
+      { title: 'Psychic Battle', attr: 'classes', type: 'chaos', text: 'Whenever a player chooses one or more targets, each player reveals the top card of his or her library. The player who reveals the card with the highest converted mana cost may change the target or targets. If two or more cards are tied for highest cost, the target or targets remain unchanged. Changing targets this way doesn’t trigger abilities of permanents named Psychic Battle.' },
+      { title: 'City of Solitude', attr: 'classes', type: 'chaos', text: 'Players can cast spells and activate abilities only during their own turns.' },
+      { title: 'Forsaken Wastes', attr: 'classes', type: 'chaos', text: 'Players can’t gain life. At the beginning of each player’s upkeep, that player loses 1 life.' },
+      { title: 'Gift of the Land', attr: 'classes', type: 'chaos', text: 'Whenever a player draws a card, he or she reveals the card drawn. If it is a land, he or she gains 2 life. Otherwise, he or she loses 1 life.' },
+      { title: 'React', attr: 'classes', type: 'chaos', text: 'Each player may play spells and activate abilities in response to Chaos Rolls.' },
+      { title: 'Up the Stakes', attr: 'classes', type: 'chaos', text: 'Double all life gained or damage dealt outside the Chaos Phase.' },
+      { title: 'Rainbow Vortex', attr: 'classes', type: 'chaos', text: 'Basic lands may tap for any colour of mana. When a nonbasic land enters the battlefield, its controller chooses a colour. That land loses all other abilities but gains “Tap: Add one of the chosen colour to your mana pool.”' },
+      { title: 'Time Sprint', attr: 'classes', type: 'wacky', text: 'Take two extra turns after this one.' },
+      { title: 'Musical Chairs', attr: 'classes', type: 'wacky', text: 'Each player moves one seat in the direction the turns are proceeding.' },
+      { title: 'It’s a New Ruling', attr: 'classes', type: 'wacky', text: 'Add up all numbers on target permanent and redistribute them however you wish.' },
+      { title: 'Master of Chaos', attr: 'classes', type: 'wacky', text: 'Until your next turn, you may choose all targets of Chaos Rolls.' },
+      { title: 'Pricing', attr: 'classes', type: 'wacky', text: 'Each player may sacrifice any number of permanents. Then, for each permanent that isn’t a basic land, each player loses 3 life for each rare he or she controls, 2 life for each uncommon he or she controls, and 1 life for each common he or she controls.' },
+      { title: 'Rainbow Vale', attr: 'classes', type: 'wacky', text: 'Put a token land named Rainbow Vale onto the battlefield under your control. It has “Tap: Add one mana of any colour to your mana pool. An opponent gains control of Rainbow Vale at the beginning of the next end step.”' },
+      { title: 'Musical Life', attr: 'classes', type: 'wacky', text: 'Each player’s life total becomes that of the player before him or her in the turn order.' },
+      { title: 'Calculator', attr: 'classes', type: 'wacky', text: 'Add or subtract 1d6 on any number of any permanent on the battlefield.' },
+      { title: 'Turn Twister', attr: 'classes', type: 'wacky', text: 'Until your next turn, at the end of each turn, randomly choose who takes the next turn.' },
+      { title: 'Escape', attr: 'classes', type: 'wacky', text: 'Target land you control gains “At end of your upkeep, exile a creature you control. Flip a coin. On heads, target player of your choice gains control of this land. When this land leaves the battlefield, all creatures exiled by it enter the battlefield under control of the last player to control it.”' },
+      { title: 'Magnet', attr: 'classes', type: 'wacky', text: 'Target creature gains “While choosing targets as part of casting a spell or activating an ability, each player must choose this creature if able.”' },
+      { title: 'Wrath of the Random', attr: 'classes', type: 'wacky', text: 'Destroy all permanents with a converted casting cost equal to the roll on 1d6.' },
+      { title: 'Chaos Ward', attr: 'classes', type: 'wacky', text: 'Target creature gains Protection from Chaos. This does not end at the end of the turn.' },
+      { title: 'Fun Time', attr: 'classes', type: 'wacky', text: 'Roll once on Chaos List, WackyLand, and EnchantWorldLand.' },
+      { title: 'Time Wall Safe', attr: 'classes', type: 'wacky', text: 'Skip one of your phases this turn. Get a Safe counter for that phase. At any time you could play an instant, you may sacrifice a Safe counter to take the phase that was skipped.' },
+      { title: 'nruT', attr: 'classes', type: 'wacky', text: 'Your turn begins with the end of the turn phase and proceeds backward through the order of phases and steps: end of turn, second main phase, combat, first main phase, draw, upkeep, untap, Chaos Phase. When you reach your Chaos Phase in this way, roll a Chaos Roll. Resolve that roll and end your turn.' },
+      { title: 'Expansion in a Bottle', attr: 'classes', type: 'wacky', text: 'Choose an expansion. Destroy all nonland permanents from the chosen expansion.' },
+      { title: 'Time Crawl Jackpot!', attr: 'classes', type: 'wacky', text: 'Put a turn counter in the Time Crawl Jackpot. After this turn, you take an additional turn for each turn counter in the Time Crawl Jackpot.' },
     ]
 
     //other rolls array
@@ -699,7 +633,7 @@
     // start the settings modal when the page loads
     // $('#centralModalLg').modal()
     // Activate Sudden Death Mode
-    var activateSuddenDeath = function() {
+    var activateSuddenDeath = function () {
       $("#worldEffects").prepend(
         "<tr class='worldEffects'><td class='text-white'>At the beginning of each player\'s upkeep, that player deals 5 damage to any target.</td></tr><tr class='worldEffects'><td class='text-white'>At the beginning of each player\'s end step, that player must discard a card and sacrifice a creature.</td></tr><tr class='worldEffects'><td class='text-white'>Whenever a player casts a spell, they may pay 1 mana of any colour. If they do, they may copy that spell and choose new targets for the copy.</td></tr>"
       );
