@@ -141,16 +141,17 @@
             <div class="card mb-4 dark-card-admin text-white">
               <div class="card-body">
                 <button id="chaosBtn"
-                  class="btn btn-flat btn-rounded waves-effect font-weight-bold float-left btn-dash purple darken-4">Chaos
+                  class="btn btn-flat btn-rounded waves-effect font-weight-bold float-left btn-dash deep-purple darken-1">Chaos
                   Roll</button>
+                <!-- <span class="numberOfChaosRollsSoFar counter">22</span> -->
                 <button id="enchantWorldBtn"
-                  class="btn btn-flat btn-rounded waves-effect font-weight-bold float-left btn-dash blue darken-4">Enchant
-                  the World</button>
+                  class="btn btn-flat btn-rounded waves-effect font-weight-bold float-left btn-dash deep-purple darken-1">Enchant
+                  World</button>
                 <button id="wackyBtn"
-                  class="btn btn-flat btn-rounded waves-effect font-weight-bold float-left btn-dash orange darken-4">Get
-                  Wacky</button>
+                  class="btn btn-flat btn-rounded waves-effect font-weight-bold float-left btn-dash deep-purple darken-2">Wacky
+                  Roll</button>
                 <button id="originalRollsBtn"
-                  class="btn btn-flat btn-rounded waves-effect font-weight-bold float-right btn-dash green darken-4">Add
+                  class="btn btn-flat btn-rounded waves-effect font-weight-bold float-right btn-dash deep-purple darken-3">Add
                 </button>
                 <table class="chaosRolls table large-header">
                   <thead>
@@ -302,7 +303,8 @@
           </div>
         </div>
         <div class="modal-footer text-center">
-          <button id="suddenDeathYarp" type="button" class="btn btn-red btn-lg" data-dismiss="modal" onclick="activateSuddenDeath()">Yarp</button>
+          <button id="suddenDeathYarp" type="button" class="btn btn-red btn-lg" data-dismiss="modal"
+            onclick="activateSuddenDeath()">Yarp</button>
           <button id="suddenDeathNarp" type="button" class="btn btn-blue btn-lg" data-dismiss="modal">Narp</button>
         </div>
       </div>
@@ -334,13 +336,12 @@
       $('#chaosBtn').on('click', function (e) {
 
         var rndmNmbr = randomNumberGenerator(0, (chaosRollArray.length - 1))
-        console.log('Chaos Roll: ' + rndmNmbr)
+        console.log('chaos roll ' + rndmNmbr + ': ' + chaosRollArray[rndmNmbr].title)
 
         // remove all the world effects when Disenchant the World comes up
         if (chaosRollArray[rndmNmbr].title == 'Disenchant the World') {
-          worldEffects.rage = false
-          worldEffects.sunkenHope = false
           $(".worldEffects").remove();
+          effectAlreadyExists = false
         }
 
         $('#chaosRolls').prepend([chaosRollArray[rndmNmbr]].map(Item).join(''));
@@ -352,19 +353,26 @@
       $('#enchantWorldBtn').on('click', function (e) {
 
         var rndmNmbr = randomNumberGenerator(0, (enchantWorldRollArray.length - 1))
-        console.log('wacky roll: ' + rndmNmbr)
+        console.log('enchant world roll ' + rndmNmbr + ': ' + enchantWorldRollArray[rndmNmbr].title)
 
-        if (enchantWorldRollArray[rndmNmbr].title == 'Rage') {
-          if (!worldEffects.rage) {
-            worldEffects.rage = true
-            $("#worldEffects").prepend("<tr id='enchantWorld' class='worldEffects'><td class='text-white'>Creatures cannot block. All creatures must attack each turn if able.</td></tr>");
-          }
-        } else if (enchantWorldRollArray[rndmNmbr].title == 'Sunken Hope') {
-          if (!worldEffects.sunkenHope) {
-            worldEffects.sunkenHope = true
-            $("#worldEffects").prepend("<tr id='enchantWorld' class='worldEffects'><td class='text-white'>At the beginning of each player\'s upkeep, that player returns a creature they control to its owner\'s hand.</td></tr>");
-          }
-        };
+        var currentGlobalEffectsObject = $('#worldEffects [title]')
+        var currentGlobalEffects = $.makeArray(currentGlobalEffectsObject)
+
+        if (currentGlobalEffects.length >= 1) {
+          currentGlobalEffects.forEach(e => {
+            if (e.title == enchantWorldRollArray[rndmNmbr].title) {
+              effectAlreadyExists = true
+            }
+          });
+        }
+        if (!effectAlreadyExists) {
+          $('#worldEffects').prepend([{
+            title: enchantWorldRollArray[rndmNmbr].title, attr: enchantWorldRollArray[rndmNmbr].attr, text: enchantWorldRollArray[rndmNmbr].text
+          }].map(Item2).join(''));
+        }
+
+
+
 
         $('#chaosRolls').prepend([enchantWorldRollArray[rndmNmbr]].map(Item).join(''));
 
@@ -375,7 +383,7 @@
       $('#wackyBtn').on('click', function (e) {
 
         var rndmNmbr = randomNumberGenerator(0, (wackyRollArray.length - 1))
-        console.log('wacky roll: ' + rndmNmbr)
+        console.log('wacky roll ' + rndmNmbr + ': ' + wackyRollArray[rndmNmbr].title)
 
         if (wackyRollArray[rndmNmbr].title == 'Rage') {
           if (!worldEffects.rage) {
@@ -383,12 +391,6 @@
             $("#worldEffects").prepend("<tr id='enchantWorld' class='worldEffects'><td class='text-white'>Creatures cannot block. All creatures must attack each turn if able.</td></tr>");
           }
         }
-        if (wackyRollArray[rndmNmbr].title == 'Sunken Hope') {
-          if (!worldEffects.sunkenHope) {
-            worldEffects.sunkenHope = true
-            $("#worldEffects").prepend("<tr id='enchantWorld' class='worldEffects'><td class='text-white'>At the beginning of each player\'s upkeep, that player returns a creature they control to its owner\'s hand.</td></tr>");
-          }
-        };
 
         $('#chaosRolls').prepend([wackyRollArray[rndmNmbr]].map(Item).join(''));
 
@@ -599,26 +601,26 @@
             { title: 'Chaos Tune', attr: 'classes', type: 'chaos', text: 'Choose any roll from the Chaos List and resolve it.' })
           //OG enchant world rolls array
           enchantWorldRollArray.push(
-            { title: 'Masquerade Cycle', attr: 'classes', type: 'chaos', text: 'Any player may pay the activation cost of any activated ability of any nonland permanent.' },
-            { title: 'Mirari Concentrate', attr: 'classes', type: 'chaos', text: 'All creatures gain +1/+1. All lands produce an additional mana of the appropriate type when tapped for mana. Whenever a player plays an instant or sorcery spell, that player may pay 4. If he or she does, he or she puts a copy of that spell onto the stack. That player may choose new targets for the copy.' },
-            { title: 'Concordant Crossroads', attr: 'classes', type: 'chaos', text: 'All creatures gain haste.' },
-            { title: 'Odyssey Block', attr: 'classes', type: 'chaos', text: 'Each instant and sorcery gains flashback. The flashback cost is equal to the card’s mana cost.' },
-            { title: 'Howling Mine', attr: 'classes', type: 'chaos', text: 'At the beginning of each player’s draw step that player draws an extra card.' },
-            { title: 'Cursed Rod', attr: 'classes', type: 'chaos', text: 'All creatures lose all abilities.' },
-            { title: 'Urza’s Epic', attr: 'classes', type: 'chaos', text: 'All cards without cycling cost an additional 1 to play and gain “Cycling: 2.”' },
-            { title: 'Bottomless Pit', attr: 'classes', type: 'chaos', text: 'At the beginning of each player’s upkeep, that player discards a card at random.' },
-            { title: 'Invasion Block', attr: 'classes', type: 'chaos', text: 'At the beginning of each player’s upkeep, that player gains 1 life for each basic land type among lands he or she controls and loses 1 life for each basic land type he or she does not control.' },
-            { title: 'Aluren', attr: 'classes', type: 'chaos', text: 'Any player may play creature cards with converted mana cost 3 or less without paying their mana cost and as though they had flash.' },
-            { title: 'Circle of Life', attr: 'classes', type: 'chaos', text: 'Whenever a card would go to the graveyard from play, shuffle it into its owner’s library instead.' },
-            { title: 'Locomotion Drain', attr: 'classes', type: 'chaos', text: 'Creatures with defender may attack as though they didn’t have defender. Creatures without defender can’t attack.' },
-            { title: 'Rath Cycle', attr: 'classes', type: 'chaos', text: 'Each instant and sorcery gains buyback. The buyback cost is life equal to its mana cost.' },
-            { title: 'Psychic Battle', attr: 'classes', type: 'chaos', text: 'Whenever a player chooses one or more targets, each player reveals the top card of his or her library. The player who reveals the card with the highest converted mana cost may change the target or targets. If two or more cards are tied for highest cost, the target or targets remain unchanged. Changing targets this way doesn’t trigger abilities of permanents named Psychic Battle.' },
-            { title: 'City of Solitude', attr: 'classes', type: 'chaos', text: 'Players can cast spells and activate abilities only during their own turns.' },
-            { title: 'Forsaken Wastes', attr: 'classes', type: 'chaos', text: 'Players can’t gain life. At the beginning of each player’s upkeep, that player loses 1 life.' },
-            { title: 'Gift of the Land', attr: 'classes', type: 'chaos', text: 'Whenever a player draws a card, he or she reveals the card drawn. If it is a land, he or she gains 2 life. Otherwise, he or she loses 1 life.' },
-            { title: 'React', attr: 'classes', type: 'chaos', text: 'Each player may play spells and activate abilities in response to Chaos Rolls.' },
-            { title: 'Up the Stakes', attr: 'classes', type: 'chaos', text: 'Double all life gained or damage dealt outside the Chaos Phase.' },
-            { title: 'Rainbow Vortex', attr: 'classes', type: 'chaos', text: 'Basic lands may tap for any colour of mana. When a nonbasic land enters the battlefield, its controller chooses a colour. That land loses all other abilities but gains “Tap: Add one of the chosen colour to your mana pool.”' })
+            { title: 'Masquerade Cycle', attr: 'classes', type: 'enchantWorld', text: 'Any player may pay the activation cost of any activated ability of any nonland permanent.' },
+            { title: 'Mirari Concentrate', attr: 'classes', type: 'enchantWorld', text: 'All creatures gain +1/+1. All lands produce an additional mana of the appropriate type when tapped for mana. Whenever a player plays an instant or sorcery spell, that player may pay 4. If he or she does, he or she puts a copy of that spell onto the stack. That player may choose new targets for the copy.' },
+            { title: 'Concordant Crossroads', attr: 'classes', type: 'enchantWorld', text: 'All creatures gain haste.' },
+            { title: 'Odyssey Block', attr: 'classes', type: 'enchantWorld', text: 'Each instant and sorcery gains flashback. The flashback cost is equal to the card’s mana cost.' },
+            { title: 'Howling Mine', attr: 'classes', type: 'enchantWorld', text: 'At the beginning of each player’s draw step that player draws an extra card.' },
+            { title: 'Cursed Rod', attr: 'classes', type: 'enchantWorld', text: 'All creatures lose all abilities.' },
+            { title: 'Urza’s Epic', attr: 'classes', type: 'enchantWorld', text: 'All cards without cycling cost an additional 1 to play and gain “Cycling: 2.”' },
+            { title: 'Bottomless Pit', attr: 'classes', type: 'enchantWorld', text: 'At the beginning of each player’s upkeep, that player discards a card at random.' },
+            { title: 'Invasion Block', attr: 'classes', type: 'enchantWorld', text: 'At the beginning of each player’s upkeep, that player gains 1 life for each basic land type among lands he or she controls and loses 1 life for each basic land type he or she does not control.' },
+            { title: 'Aluren', attr: 'classes', type: 'enchantWorld', text: 'Any player may play creature cards with converted mana cost 3 or less without paying their mana cost and as though they had flash.' },
+            { title: 'Circle of Life', attr: 'classes', type: 'enchantWorld', text: 'Whenever a card would go to the graveyard from play, shuffle it into its owner’s library instead.' },
+            { title: 'Locomotion Drain', attr: 'classes', type: 'enchantWorld', text: 'Creatures with defender may attack as though they didn’t have defender. Creatures without defender can’t attack.' },
+            { title: 'Rath Cycle', attr: 'classes', type: 'enchantWorld', text: 'Each instant and sorcery gains buyback. The buyback cost is life equal to its mana cost.' },
+            { title: 'Psychic Battle', attr: 'classes', type: 'enchantWorld', text: 'Whenever a player chooses one or more targets, each player reveals the top card of his or her library. The player who reveals the card with the highest converted mana cost may change the target or targets. If two or more cards are tied for highest cost, the target or targets remain unchanged. Changing targets this way doesn’t trigger abilities of permanents named Psychic Battle.' },
+            { title: 'City of Solitude', attr: 'classes', type: 'enchantWorld', text: 'Players can cast spells and activate abilities only during their own turns.' },
+            { title: 'Forsaken Wastes', attr: 'classes', type: 'enchantWorld', text: 'Players can’t gain life. At the beginning of each player’s upkeep, that player loses 1 life.' },
+            { title: 'Gift of the Land', attr: 'classes', type: 'enchantWorld', text: 'Whenever a player draws a card, he or she reveals the card drawn. If it is a land, he or she gains 2 life. Otherwise, he or she loses 1 life.' },
+            { title: 'React', attr: 'classes', type: 'enchantWorld', text: 'Each player may play spells and activate abilities in response to chaos Rolls.' },
+            { title: 'Up the Stakes', attr: 'classes', type: 'enchantWorld', text: 'Double all life gained or damage dealt outside the chaos Phase.' },
+            { title: 'Rainbow Vortex', attr: 'classes', type: 'enchantWorld', text: 'Basic lands may tap for any colour of mana. When a nonbasic land enters the battlefield, its controller chooses a colour. That land loses all other abilities but gains “Tap: Add one of the chosen colour to your mana pool.”' })
           //OG wacky rolls array
           wackyRollArray.push(
             { title: 'Time Sprint', attr: 'classes', type: 'wacky', text: 'Take two extra turns after this one.' },
@@ -648,19 +650,19 @@
   <script>
     //chaos rolls array 
     let chaosRollArray = [
-      { title: 'Lightning Bolt', attr: 'aggressive burn', type: 'chaos', text: 'Deal 3 damage to target creature or player.' },
       { title: 'Disenchant the World', attr: 'passive', type: 'chaos', text: 'Remove all global effects.' },
-      { title: 'It\'s a Trap!', attr: 'aggressive', type: 'chaos', text: 'Target player sacrifices a creature.' },
-      { title: 'Play Fair', attr: 'other lifeGain', type: 'chaos', text: 'The player with the highest life total loses 5 life. The player with the lowest life total gains 5 life. If two players are tied, they both gain or lose this amount of life.' },
-      { title: 'Life\'s not fair', attr: 'passive', type: 'chaos', text: 'The player with the highest life total draws 2 cards. All other players draw 1 card.' },
-      { title: 'Giant Growth', attr: 'aggressive', type: 'chaos', text: 'Target creature gets +7/+7 until end of turn.' },
-      { title: 'Rickrolled', attr: 'aggressive', type: 'chaos', text: 'Lose your turn. If your name is Rick, you lose 1 life.' },
+      // { title: 'Lightning Bolt', attr: 'aggressive burn', type: 'chaos', text: 'Deal 3 damage to target creature or player.' },
+      // { title: 'It\'s a Trap!', attr: 'aggressive', type: 'chaos', text: 'Target player sacrifices a creature.' },
+      // { title: 'Play Fair', attr: 'other lifeGain', type: 'chaos', text: 'The player with the highest life total loses 5 life. The player with the lowest life total gains 5 life. If two players are tied, they both gain or lose this amount of life.' },
+      // { title: 'Life\'s not fair', attr: 'passive', type: 'chaos', text: 'The player with the highest life total draws 2 cards. All other players draw 1 card.' },
+      // { title: 'Giant Growth', attr: 'aggressive', type: 'chaos', text: 'Target creature gets +7/+7 until end of turn.' },
+      // { title: 'Rickrolled', attr: 'aggressive', type: 'chaos', text: 'Lose your turn. If your name is Rick, you lose 1 life.' },
       // { title: 'name', attr: 'classes', type: 'chaos', text: 'text.' }, 
     ]
     //enchant world rolls array
     let enchantWorldRollArray = [
       { title: 'Rage', attr: 'aggressive', type: 'enchantWorld', text: 'Creatures cannot block. All creatures must attack each turn if able.' },
-      { title: '420', attr: 'passive', type: 'enchantWorld', text: 'Until your next turn, creatures do not untap as normal during their controller\'s untap steps.' },
+      { title: '420', attr: 'passive', type: 'enchantWorld', text: 'Creatures do not untap as normal during their controller\'s untap steps.' },
       { title: 'Sunken Hope', attr: 'passive', type: 'enchantWorld', text: 'At the beginning of each player\'s upkeep, that player returns a creature they control to its owner\'s hand.' },
     ]
     //wacky rolls array
@@ -677,13 +679,13 @@
       return Math.floor(Math.random() * (max - min + 1) + min)
     }
     //get an even more random number: 
-    let realRandomNumber = function (min, max) {
+    let reallyRandomNumber = function (min, max) {
       $.get("https://www.random.org/integers/?num=1&min=" + min + "&max=" + max + "&col=1&base=10&format=plain&rnd=new").done(function (data) {
         //ideally, this will work by grabbing a thousand random numbers in one array as the page loads, then loops through them as you roll. This should ensure max randomness while also preventing the number of times the app slows down so it can reach out to the random number API.
         //This may need to be recalculated every time you change the total number of rolls in any array. This would mean running this function alongside any roll addition options, OR we start the game with a settings modal that allows you to choose what you'll want in the game, then it will do a single call out to the random number APi and bring back an array of 1000 random numbers with a max of whatever the total of all the selections chosen are.
       });
     }
-    // realRandomNumber(1, 100, console.log('test'))
+    // reallyRandomNumber(1, 100, console.log('test'))
     // console.log(window.randomNumber)
     // create constructor for rolls
     const Item = ({ title, type, text }) =>
@@ -692,6 +694,13 @@
           <td class='text-white'>${type}</td>
           <td class='text-white'>${text}</td>
          </tr>`;
+    // create constructor for rolls
+    const Item2 = ({ attr, text, title }) =>
+      `<tr title='${title}' class='worldEffects ${attr}'>
+      <td class='text-white'>${text}</td>
+     </tr>`;
+    // create a new object for active global effects 
+    let effectAlreadyExists = false
     // create a new object for active effects
     var worldEffects = {};
     // set conditions for extra rolls to be added to the primary chaos roll array
@@ -699,7 +708,7 @@
     // start the settings modal when the page loads
     // $('#centralModalLg').modal()
     // Activate Sudden Death Mode
-    var activateSuddenDeath = function() {
+    var activateSuddenDeath = function () {
       $("#worldEffects").prepend(
         "<tr class='worldEffects'><td class='text-white'>At the beginning of each player\'s upkeep, that player deals 5 damage to any target.</td></tr><tr class='worldEffects'><td class='text-white'>At the beginning of each player\'s end step, that player must discard a card and sacrifice a creature.</td></tr><tr class='worldEffects'><td class='text-white'>Whenever a player casts a spell, they may pay 1 mana of any colour. If they do, they may copy that spell and choose new targets for the copy.</td></tr>"
       );
