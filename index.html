@@ -19,129 +19,13 @@
     .fixed-sn footer,
     .fixed-sn main {
       padding-left: 0rem;
+      padding-top: 0.5rem;
     }
   </style>
 </head>
 
 <body class="fixed-sn navy-blue-skin dark-bg-admin" cz-shortcut-listen="true">
 
-  <!-- Main Navigation -->
-  <header>
-
-    <!-- Navbar -->
-    <nav class="navbar fixed-top navbar-expand-lg scrolling-navbar double-nav white-skin navy-blue-skin">
-
-      <!-- SideNav slide-out button -->
-      <div class="float-left">
-        <a href="#" data-activates="slide-out" class="button-collapse"><i class="fas fa-bars text-white"></i></a>
-      </div>
-
-      <!-- Breadcrumb -->
-      <div class="breadcrumb-dn mr-auto">
-        <p class="text-white">Tekkit Chaos MTG App v0.1</p>
-      </div>
-
-      <div class="d-flex change-mode">
-
-        <!-- Navbar links -->
-        <ul class="nav navbar-nav nav-flex-icons ml-auto">
-
-          <!-- Dropdown 
-          <li class="nav-item   notifications-nav">
-            <a class="nav-link waves-effect text-white"  
-            aria-expanded="false" target="_blank" href="https://mdbootstrap.com/docs/b4/jquery/components/demo/">
-            <i class="fas fa-pen text-white"></i>
-          <span class="d-none d-md-inline-block">Design Resources</span>
-        </a> 
-        </li>  -->
-          <li class="nav-item   notifications-nav">
-            <a data-toggle="modal" data-target="#fullHeightModalRight" class="nav-link   waves-effect text-white"
-              aria-expanded="false">
-              <!-- <span class="badge red">4 </span>  -->
-              <i class="fas fa-lightbulb text-white"></i>
-              <span class="d-none d-md-inline-block">Future
-                Plans/Ideas</span>
-            </a>
-          </li>
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle waves-effect text-white" href="#" id="userDropdown"
-              data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              <i class="fas fa-cog text-white"></i> <span class="clearfix d-none d-sm-inline-block">Menu</span>
-            </a>
-            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
-              <a class="dropdown-item waves-effect waves-light" target="_blank"
-                onclick="$('#centralModalLg').modal()">Settings</a>
-              <a class="dropdown-item waves-effect waves-light" target="_blank"
-                onclick="$('#suddenDeathModal').modal()">Sudden Death Mode</a>
-              <a class="dropdown-item waves-effect waves-light" target="_blank"
-                href="https://www.random.org/clients/http/">Random Numbers</a>
-              <a class="dropdown-item waves-effect waves-light" target="_blank"
-                href="https://mdbootstrap.com/docs/b4/jquery/components/demo/">Design Resources</a>
-            </div>
-          </li>
-
-        </ul>
-
-      </div>
-    </nav>
-    <!-- Navbar -->
-
-    <!-- Navbar Modal Future Plans/Ideas -->
-    <div class="modal fade right" id="fullHeightModalRight" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-      aria-hidden="true">
-
-      <!-- Add class .modal-full-height and then add class .modal-right (or other classes from list above) to set a position to the modal -->
-      <div class="modal-dialog modal-full-height modal-right" role="document">
-
-
-        <div class="modal-content">
-          <div class="modal-header">
-            <h4 class="modal-title w-100" id="myModalLabel">Future Plans/Ideas</h4>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <span>Switch to persistent storage by using localstorage instead of JS HTML appends.</span>
-            <hr>
-            <span>Add in options to speed up the game, such as turning on more aggressive rolls and removing all life
-              gain.</span>
-            <hr>
-            <span>Add difficulty/intensity levels.</span>
-            <hr>
-            <span>Update the settings so they actually change the roll list when used, and build the rollRebuild
-              function.</span>
-            <hr>
-            <span>Add a survival game mode, where you try to survive specific challenges or waves of challenges, and
-              have options for different numbers of players.</span>
-            <hr>
-            <span>Create leaderboards for decks that attempt different challenges as well as their highest
-              scores.</span>
-            <hr>
-            <span>Rollback option to delete the previous roll.</span>
-            <hr>
-            <span>Set it up so you start each game with a random enchant world, and add in a setting that will be
-              checked by default that can toggle this option.</span>
-            <hr>
-            <span>Add in details from mtg sites like the recent banned/restricted lists, what all the random new
-              abilities that come out each month do, etc.</span>
-            <hr>
-            <span>Create specific rules for situational rolls. Death roll? Higher chance of life gain. Rolls for the
-              first 3 turns could have low intensity.</span>
-            <hr>
-            <span>Create a scaling intensity mode that matches the intensity level to the turn level up to 10.</span>
-            <hr>
-          </div>
-          <div class="modal-footer justify-content-center">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- Navbar Modal Future Plans/Ideas -->
-
-  </header>
-  <!-- Main Navigation -->
 
   <!-- Main layout -->
   <main>
@@ -212,20 +96,66 @@
 
 
     <nav class="navbar fixed-bottom navbar-dark white-skin navy-blue-skin">
-      <a class="navbar-brand" href="#">Tekkit Chaos MTG App</a>
+      <a class="navbar-brand" href="#">Tekkit MTG</a>
       <button id="chaosBtn"
         class="btn btn-flat btn-rounded waves-effect font-weight-bold float-left btn-dash deep-purple darken-1">Chaos
-        Roll</button>
+      </button>
       <!-- <span class="numberOfChaosRollsSoFar counter">22</span> -->
       <button id="enchantWorldBtn"
-        class="btn btn-flat btn-rounded waves-effect font-weight-bold float-left btn-dash deep-purple darken-1">Enchant
+        class="btn btn-flat btn-rounded waves-effect font-weight-bold float-left btn-dash deep-purple darken-1">
         World</button>
       <button id="wackyBtn"
         class="btn btn-flat btn-rounded waves-effect font-weight-bold float-left btn-dash deep-purple darken-2">Wacky
-        Roll</button>
-      <button id="originalRollsBtn"
-        class="btn btn-flat btn-rounded waves-effect font-weight-bold float-right btn-dash deep-purple darken-3">Add
       </button>
+
+
+      <div class="d-flex change-mode">
+
+        <!-- Navbar links -->
+        <ul class="nav navbar-nav nav-flex-icons ml-auto">
+
+          <!-- Dropdown 
+          <li class="nav-item   notifications-nav">
+            <a class="nav-link waves-effect text-white"  
+            aria-expanded="false" target="_blank" href="https://mdbootstrap.com/docs/b4/jquery/components/demo/">
+            <i class="fas fa-pen text-white"></i>
+          <span class="d-none d-md-inline-block">Design Resources</span>
+        </a> 
+        </li>  -->
+          <li class="nav-item   notifications-nav">
+
+          </li>
+          <li class="nav-item dropup">
+            <a class="nav-link dropdown-toggle waves-effect text-white" href="#" id="userDropdown"
+              data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <i class="fas fa-cog text-white"></i> <span class="clearfix d-none d-sm-inline-block">Menu</span>
+            </a>
+            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
+              <a class="dropdown-item waves-effect waves-light" target="_blank"
+                onclick="$('#centralModalLg').modal()">Settings</a>
+              <a class="dropdown-item waves-effect waves-light" target="_blank"
+                onclick="$('#suddenDeathModal').modal()">Sudden Death Mode</a>
+              <a class="dropdown-item waves-effect waves-light" target="_blank"
+                href="https://www.random.org/clients/http/">Random Numbers</a>
+              <a class="dropdown-item waves-effect waves-light" target="_blank"
+                href="https://mdbootstrap.com/docs/b4/jquery/components/demo/">Design Resources</a>
+              <a data-toggle="modal" data-target="#fullHeightModalRight" class="nav-link   waves-effect"
+                aria-expanded="false">
+                <span style="padding-right: 15px" class="d-none d-md-inline-block">Planned Features</span>
+              </a>
+              <a id="originalRollsBtn" class="dropdown-item waves-effect waves-light" href="#">Add More
+                Rolls</a>
+            </div>
+      </div>
+
+      </div>
+      </li>
+
+      </ul>
+
+      </div>
+
+
     </nav>
 
   </footer>
@@ -301,7 +231,6 @@
   </div>
   <!-- Central App Launch Modal -->
 
-
   <!-- suddenDeathModal -->
   <div class="modal fade" id="suddenDeathModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
     aria-hidden="true">
@@ -333,6 +262,60 @@
     </div>
   </div>
   <!-- suddenDeathModal -->
+
+  <!-- Navbar Modal Future Plans/Ideas -->
+  <div class="modal fade right" id="fullHeightModalRight" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+    aria-hidden="true">
+
+    <!-- Add class .modal-full-height and then add class .modal-right (or other classes from list above) to set a position to the modal -->
+    <div class="modal-dialog modal-full-height modal-right" role="document">
+
+
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title w-100" id="myModalLabel">Future Plans/Ideas</h4>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <span>Switch to persistent storage by using localstorage instead of JS HTML appends.</span>
+          <hr>
+          <span>Add in options to speed up the game, such as turning on more aggressive rolls and removing all life
+            gain.</span>
+          <hr>
+          <span>Add difficulty/intensity levels.</span>
+          <hr>
+          <span>Update the settings so they actually change the roll list when used, and build the rollRebuild
+            function.</span>
+          <hr>
+          <span>Add a survival game mode, where you try to survive specific challenges or waves of challenges, and
+            have options for different numbers of players.</span>
+          <hr>
+          <span>Create leaderboards for decks that attempt different challenges as well as their highest
+            scores.</span>
+          <hr>
+          <span>Rollback option to delete the previous roll.</span>
+          <hr>
+          <span>Set it up so you start each game with a random enchant world, and add in a setting that will be
+            checked by default that can toggle this option.</span>
+          <hr>
+          <span>Add in details from mtg sites like the recent banned/restricted lists, what all the random new
+            abilities that come out each month do, etc.</span>
+          <hr>
+          <span>Create specific rules for situational rolls. Death roll? Higher chance of life gain. Rolls for the
+            first 3 turns could have low intensity.</span>
+          <hr>
+          <span>Create a scaling intensity mode that matches the intensity level to the turn level up to 10.</span>
+          <hr>
+        </div>
+        <div class="modal-footer justify-content-center">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Navbar Modal Future Plans/Ideas -->
 
 
   <!-- SCRIPTS -->
