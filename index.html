@@ -152,22 +152,10 @@
         <!-- Grid row -->
         <div class="row">
           <!-- Grid column -->
-          <div class="col-lg-8 col-md-9">
+          <div class="col-lg-7 col-md-7">
             <div class="card mb-4 dark-card-admin text-white">
               <div class="card-body">
-                <button id="chaosBtn"
-                  class="btn btn-flat btn-rounded waves-effect font-weight-bold float-left btn-dash deep-purple darken-1">Chaos
-                  Roll</button>
-                <!-- <span class="numberOfChaosRollsSoFar counter">22</span> -->
-                <button id="enchantWorldBtn"
-                  class="btn btn-flat btn-rounded waves-effect font-weight-bold float-left btn-dash deep-purple darken-1">Enchant
-                  World</button>
-                <button id="wackyBtn"
-                  class="btn btn-flat btn-rounded waves-effect font-weight-bold float-left btn-dash deep-purple darken-2">Wacky
-                  Roll</button>
-                <button id="originalRollsBtn"
-                  class="btn btn-flat btn-rounded waves-effect font-weight-bold float-right btn-dash deep-purple darken-3">Add
-                </button>
+
                 <table class="chaosRolls table large-header">
                   <thead>
                     <tr>
@@ -182,7 +170,7 @@
             </div>
           </div>
           <!-- Global Effects -->
-          <div class="col-md-3 col-lg-4 ">
+          <div class="col-md-5 col-lg-5 ">
             <div class="card mb-4 dark-card-admin text-white">
               <div class="card-body">
                 <div class="table-responsive">
@@ -220,6 +208,25 @@
       </div>
     </div>
     <!-- Copyright -->
+
+
+
+    <nav class="navbar fixed-bottom navbar-dark white-skin navy-blue-skin">
+      <a class="navbar-brand" href="#">Tekkit Chaos MTG App</a>
+      <button id="chaosBtn"
+        class="btn btn-flat btn-rounded waves-effect font-weight-bold float-left btn-dash deep-purple darken-1">Chaos
+        Roll</button>
+      <!-- <span class="numberOfChaosRollsSoFar counter">22</span> -->
+      <button id="enchantWorldBtn"
+        class="btn btn-flat btn-rounded waves-effect font-weight-bold float-left btn-dash deep-purple darken-1">Enchant
+        World</button>
+      <button id="wackyBtn"
+        class="btn btn-flat btn-rounded waves-effect font-weight-bold float-left btn-dash deep-purple darken-2">Wacky
+        Roll</button>
+      <button id="originalRollsBtn"
+        class="btn btn-flat btn-rounded waves-effect font-weight-bold float-right btn-dash deep-purple darken-3">Add
+      </button>
+    </nav>
 
   </footer>
   <!-- Footer -->
@@ -385,6 +392,9 @@
             title: enchantWorldRollArray[rndmNmbr].title, level: enchantWorldRollArray[rndmNmbr].level, attr: enchantWorldRollArray[rndmNmbr].attr, text: enchantWorldRollArray[rndmNmbr].text
           }].map(Item2).join(''));
         }
+
+        effectAlreadyExists = '';
+
         $('#chaosRolls').prepend([enchantWorldRollArray[rndmNmbr]].map(Item).join(''));
 
       });
@@ -641,7 +651,7 @@
             { title: 'Magnet', level: '1', attr: 'classes', type: 'wacky', text: 'Target creature gains “While choosing targets as part of casting a spell or activating an ability, each player must choose this creature if able.”' },
             { title: 'Wrath of the Random', level: '1', attr: 'classes', type: 'wacky', text: 'Destroy all permanents with a converted casting cost equal to the roll on 1d6.' },
             { title: 'Chaos Ward', level: '1', attr: 'classes', type: 'wacky', text: 'Target creature gains Protection from Chaos. This does not end at the end of the turn.' },
-            { title: 'Fun Time', level: '1', attr: 'classes', type: 'wacky', text: 'Roll once on Chaos, Wacky, and Enchant World.' }, 
+            { title: 'Fun Time', level: '1', attr: 'classes', type: 'wacky', text: 'Roll once on Chaos, Wacky, and Enchant World.' },
             { title: 'nruT', level: '1', attr: 'classes', type: 'wacky', text: 'Your turn begins with the end of the turn phase and proceeds backward through the order of phases and steps: end of turn, second main phase, combat, first main phase, draw, upkeep, untap, Chaos Phase. When you reach your Chaos Phase in this way, roll a Chaos Roll. Resolve that roll and end your turn.' },
             { title: 'Expansion in a Bottle', level: '1', attr: 'classes', type: 'wacky', text: 'Choose an expansion. Destroy all nonland permanents from the chosen expansion.' })
         }
