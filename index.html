@@ -106,18 +106,22 @@
             <hr>
             <span>Add in options to speed up the game, such as turning on more aggressive rolls and removing all life
               gain.</span>
-              <hr>
-              <span>Add difficulty/intensity levels.</span>
-              <hr>
-              <span>Update the settings so they actually change the roll list when used, and build the rollRebuild function.</span>
             <hr>
-            <span>Add a survival game mode, where you try to survive specific challenges or waves of challenges, and have options for different numbers of players.</span>
+            <span>Add difficulty/intensity levels.</span>
             <hr>
-            <span>Create leaderboards for decks that attempt different challenges as well as their highest scores.</span>
+            <span>Update the settings so they actually change the roll list when used, and build the rollRebuild
+              function.</span>
+            <hr>
+            <span>Add a survival game mode, where you try to survive specific challenges or waves of challenges, and
+              have options for different numbers of players.</span>
+            <hr>
+            <span>Create leaderboards for decks that attempt different challenges as well as their highest
+              scores.</span>
             <hr>
             <span>Rollback option to delete the previous roll.</span>
             <hr>
-            <span>Set it up so you start each game with a random enchant world, and add in a setting that will be checked by default that can toggle this option.</span>
+            <span>Set it up so you start each game with a random enchant world, and add in a setting that will be
+              checked by default that can toggle this option.</span>
             <hr>
             <span>Add in details from mtg sites like the recent banned/restricted lists, what all the random new
               abilities that come out each month do, etc.</span>
@@ -308,7 +312,8 @@
         <div class="modal-body">
           <div class="container">
             <div class="row">
-              <p>Sudden Death Mode will turn on multiple terrifying Global Effects which are all but guaranteed to end the game very soon.<br><br>Are you sure you'd like to die quickly?</p>
+              <p>Sudden Death Mode will turn on multiple terrifying Global Effects which are all but guaranteed to end
+                the game very soon.<br><br>Are you sure you'd like to die quickly?</p>
             </div>
           </div>
         </div>
@@ -496,7 +501,6 @@
             { title: 'Forget', level: '1', attr: 'classes', type: 'chaos', text: 'Target player discards two cards, then draws as many cards as he or she discarded this way.' },
             { title: 'Gambit', level: '1', attr: 'classes', type: 'chaos', text: 'Each player chooses a card in his or her hand. Each player then reveals the card chosen this way. Put the creature with the lowest converted mana cost onto the battlefield under its owner’s control, then repeat with enchantments and artifacts. If two or more cards tie for the lowest converted mana cost, put all those cards onto the battlefield.' },
             { title: 'Luck', level: '1', attr: 'classes', type: 'chaos', text: 'Reveal your hand and choose an instant or sorcery card from it at random. Play that spell without paying its casting cost. If X is in the casting cost, X is 0.' },
-            { title: 'Windows of Opportunity', level: '1', attr: 'classes', type: 'chaos', text: 'Target player taps all artifacts, lands, and creatures he or she controls. At the end of your turn, tap all artifacts, lands, and creatures you control.' },
             { title: 'Energy Bolt', level: '1', attr: 'classes', type: 'chaos', text: 'Choose one – Deal 1d6 damage to target player or gain 1d6 life.' },
             { title: 'Price of Knowledge', level: '1', attr: 'classes', type: 'chaos', text: 'Skip your next turn. Draw four cards.' },
             { title: 'Tremble', level: '1', attr: 'classes', type: 'chaos', text: 'Each player sacrifices a land.' },
@@ -637,11 +641,9 @@
             { title: 'Magnet', level: '1', attr: 'classes', type: 'wacky', text: 'Target creature gains “While choosing targets as part of casting a spell or activating an ability, each player must choose this creature if able.”' },
             { title: 'Wrath of the Random', level: '1', attr: 'classes', type: 'wacky', text: 'Destroy all permanents with a converted casting cost equal to the roll on 1d6.' },
             { title: 'Chaos Ward', level: '1', attr: 'classes', type: 'wacky', text: 'Target creature gains Protection from Chaos. This does not end at the end of the turn.' },
-            { title: 'Fun Time', level: '1', attr: 'classes', type: 'wacky', text: 'Roll once on Chaos, Wacky, and Enchant World.' },
-            { title: 'Time Wall Safe', level: '1', attr: 'classes', type: 'wacky', text: 'Skip one of your phases this turn. Get a Safe counter for that phase. At any time you could play an instant, you may sacrifice a Safe counter to take the phase that was skipped.' },
+            { title: 'Fun Time', level: '1', attr: 'classes', type: 'wacky', text: 'Roll once on Chaos, Wacky, and Enchant World.' }, 
             { title: 'nruT', level: '1', attr: 'classes', type: 'wacky', text: 'Your turn begins with the end of the turn phase and proceeds backward through the order of phases and steps: end of turn, second main phase, combat, first main phase, draw, upkeep, untap, Chaos Phase. When you reach your Chaos Phase in this way, roll a Chaos Roll. Resolve that roll and end your turn.' },
-            { title: 'Expansion in a Bottle', level: '1', attr: 'classes', type: 'wacky', text: 'Choose an expansion. Destroy all nonland permanents from the chosen expansion.' },
-            { title: 'Time Crawl Jackpot!', level: '1', attr: 'classes', type: 'wacky', text: 'Put a turn counter in the Time Crawl Jackpot. After this turn, you take an additional turn for each turn counter in the Time Crawl Jackpot.' })
+            { title: 'Expansion in a Bottle', level: '1', attr: 'classes', type: 'wacky', text: 'Choose an expansion. Destroy all nonland permanents from the chosen expansion.' })
         }
       });
     }); 
@@ -657,7 +659,7 @@
       // { title: 'Play Fair', level: '1', attr: 'other lifeGain', type: 'chaos', text: 'The player with the highest life total loses 5 life. The player with the lowest life total gains 5 life. If two players are tied, they both gain or lose this amount of life.' },
       // { title: 'Life\'s not fair', level: '1', attr: 'passive', type: 'chaos', text: 'The player with the highest life total draws 2 cards. All other players draw 1 card.' },
       // { title: 'Giant Growth', level: '1', attr: 'aggressive', type: 'chaos', text: 'Target creature gets +7/+7 until end of turn.' },
-      // { title: 'Rickrolled', level: '1', attr: 'aggressive', type: 'chaos', text: 'Lose your turn. If your name is Rick, you lose 1 life.' },
+      { title: 'Rickrolled', level: '1', attr: 'aggressive', type: 'chaos', text: 'Lose your turn. If your name is Rick, you lose 1 life.' },
       // { title: 'name', level: '1', attr: 'classes', type: 'chaos', text: 'text.' }, 
     ]
     //enchant world rolls array
